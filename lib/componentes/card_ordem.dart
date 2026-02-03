@@ -40,9 +40,21 @@ class CardOrdem extends StatelessWidget {
       case '1':
         return Colors.red.shade50;
       case '2':
-        return Colors.yellow.shade300;
+        return Colors.orange.shade100;
       case '3':
-        return Colors.grey.shade50;
+        return Colors.grey.shade200;
+    }
+    return Colors.white;
+  }
+
+  Color get corTextPrioridade {
+    switch (prioridade) {
+      case '1':
+        return Colors.red.shade900;
+      case '2':
+        return Colors.orange.shade900;
+      case '3':
+        return Colors.grey.shade900;
     }
     return Colors.white;
   }
@@ -92,7 +104,7 @@ class CardOrdem extends StatelessWidget {
                     ),
                     Container(
                       alignment: Alignment.center, // 🔑 centraliza tudo
-                      width: 60,
+                      width: 70,
                       height: 25,
                       margin: EdgeInsets.only(left: 10),
                       decoration: BoxDecoration(
@@ -102,7 +114,7 @@ class CardOrdem extends StatelessWidget {
                       child: Text(
                         descPrioridade,
                         style: TextStyle(
-                          color: Colors.red.shade900,
+                          color: corTextPrioridade,
                           fontSize: 17,
                           fontWeight: FontWeight.w600,
                         ),

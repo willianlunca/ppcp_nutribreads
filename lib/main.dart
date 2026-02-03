@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:ppcp_nutribreads/functions/loop.dart';
 import 'package:ppcp_nutribreads/screens/lista_ordens.dart';
 
 void main() {
+  DebugLoop.iniciar();
   runApp(const MyApp());
 }
 
