@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ppcp_nutribreads/screens/produtos_ordens.dart';
 
 class CardOrdem extends StatelessWidget {
   final String descricaoOrdem;
@@ -42,7 +43,7 @@ class CardOrdem extends StatelessWidget {
       case '2':
         return Colors.orange.shade100;
       case '3':
-        return Colors.grey.shade200;
+        return Colors.green.shade100;
     }
     return Colors.white;
   }
@@ -54,7 +55,7 @@ class CardOrdem extends StatelessWidget {
       case '2':
         return Colors.orange.shade900;
       case '3':
-        return Colors.grey.shade900;
+        return Colors.green.shade900;
     }
     return Colors.white;
   }
@@ -73,7 +74,13 @@ class CardOrdem extends StatelessWidget {
         clipBehavior: Clip.antiAlias, // recorta o ripple
         child: InkWell(
           borderRadius: radius,
-          onTap: () => print('Card Ordem $descricaoOrdem pressionado'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ListaPoroducao()),
+            );
+          },
+
           child: Ink(
             width: MediaQuery.of(context).size.width * 0.60,
             height: 150,
@@ -175,6 +182,21 @@ class CardOrdem extends StatelessWidget {
                     valueColor: AlwaysStoppedAnimation<Color>(
                       Colors.green.shade900,
                     ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 4),
+                  child: Row(
+                    children: [
+                      Text(
+                        '$qtdProduzidas/$qtdItens Concluídos',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey.shade900,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

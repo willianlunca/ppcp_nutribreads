@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:ppcp_nutribreads/componentes/card_produto.dart';
 import 'package:ppcp_nutribreads/componentes/cabecalho_list_prod.dart';
 
-class Producao extends StatelessWidget {
-  const Producao({super.key});
+class ListaPoroducao extends StatelessWidget {
+  const ListaPoroducao({super.key});
 
   @override
   Widget build(BuildContext context) {

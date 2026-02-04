@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ppcp_nutribreads/screens/lista_ordens.dart';
 
 class CabecalhoProd extends StatelessWidget {
   final String buttonVoltar;
@@ -33,8 +34,14 @@ class CabecalhoProd extends StatelessWidget {
                   child: Icon(Icons.arrow_back, size: 14, color: Colors.black),
                 ),
                 InkWell(
+                  //DEVE SER SUBISTITUIDO POR LOGICAS E PUXAR OS ITENS REAIS DA LISTA.
                   onTap: () {
-                    print('Voltar as Ordens');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ListaOrdens(),
+                      ),
+                    );
                   },
                   child: Text(
                     buttonVoltar,
