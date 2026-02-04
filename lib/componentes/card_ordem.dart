@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ppcp_nutribreads/screens/produtos_ordens.dart';
+import 'package:ppcp_nutribreads/screens/lista_produtos_ordens.dart';
 
 class CardOrdem extends StatelessWidget {
   final String descricaoOrdem;
@@ -70,7 +70,7 @@ class CardOrdem extends StatelessWidget {
 
       child: Material(
         borderRadius: radius,
-        color: Colors.transparent,
+        color: Colors.white,
         clipBehavior: Clip.antiAlias, // recorta o ripple
         child: InkWell(
           borderRadius: radius,
@@ -87,7 +87,7 @@ class CardOrdem extends StatelessWidget {
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
               borderRadius: radius,
-              border: Border.all(color: Colors.grey, width: 1.0),
+              border: Border.all(color: Colors.grey.shade300, width: 1.0),
             ),
             child: Column(
               children: [
@@ -138,7 +138,7 @@ class CardOrdem extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w300,
-                          color: Colors.black,
+                          color: Colors.grey.shade600,
                         ),
                       ),
                     ),
@@ -149,6 +149,7 @@ class CardOrdem extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w300,
+                          color: Colors.grey.shade600,
                         ),
                       ),
                     ),
@@ -159,6 +160,7 @@ class CardOrdem extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w300,
+                          color: Colors.grey.shade600,
                         ),
                       ),
                     ),
@@ -180,19 +182,19 @@ class CardOrdem extends StatelessWidget {
                     value: progresso,
                     backgroundColor: Colors.grey.shade300,
                     valueColor: AlwaysStoppedAnimation<Color>(
-                      Colors.green.shade900,
+                      Colors.green.shade700,
                     ),
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 4),
+                  margin: EdgeInsets.only(top: 6),
                   child: Row(
                     children: [
                       Text(
                         '$qtdProduzidas/$qtdItens Concluídos',
                         style: TextStyle(
                           fontSize: 18,
-                          color: Colors.grey.shade900,
+                          color: Colors.grey.shade600,
                           fontWeight: FontWeight.w300,
                         ),
                       ),

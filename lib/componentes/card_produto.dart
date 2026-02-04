@@ -40,20 +40,21 @@ class CardProduto extends StatelessWidget {
           onTap: onTap ?? () => print('Botão Produção pressionado'),
           child: Ink(
             // 🔑 Ink + decoração = splash certinho por dentro
+            padding: const EdgeInsets.all(12),
             width: MediaQuery.of(context).size.width * 0.60,
             height: 150,
 
             decoration: BoxDecoration(
               borderRadius: radius,
-              border: Border.all(color: Colors.grey, width: 1.0),
+              border: Border.all(color: Colors.grey.shade300, width: 1.0),
+              color: Colors.white,
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Row(
                   children: [
-                    SizedBox(
+                    Container(
+                      margin: EdgeInsets.only(right: 4),
                       child: Icon(
                         Icons.inventory_2,
                         size: 20,
@@ -68,7 +69,7 @@ class CardProduto extends StatelessWidget {
                         style: TextStyle(
                           color: Colors.grey.shade900,
                           fontSize: 20,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
@@ -81,7 +82,11 @@ class CardProduto extends StatelessWidget {
                       child: SizedBox(
                         child: Text(
                           '$quantidadeProduzida / $quantidade un',
-                          style: const TextStyle(fontSize: 14),
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey.shade600,
+                            fontWeight: FontWeight.w300,
+                          ),
                         ),
                       ),
                     ),
@@ -96,6 +101,15 @@ class CardProduto extends StatelessWidget {
                       height: 25,
                       child: Text(status, style: const TextStyle(fontSize: 14)),
                     ),
+                    const Spacer(),
+                    Container(
+                      margin: EdgeInsets.only(left: 14),
+                      child: Icon(
+                        Icons.chevron_right,
+                        size: 28,
+                        color: Colors.grey.shade700,
+                      ),
+                    ),
                   ],
                 ),
                 Container(
@@ -105,7 +119,7 @@ class CardProduto extends StatelessWidget {
                     value: progresso,
                     backgroundColor: Colors.grey.shade100,
                     valueColor: AlwaysStoppedAnimation<Color>(
-                      Colors.green.shade900,
+                      Colors.green.shade700,
                     ),
                   ),
                 ),

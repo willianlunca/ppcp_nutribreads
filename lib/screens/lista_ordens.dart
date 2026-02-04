@@ -33,7 +33,8 @@ class _ListaOrdensState extends State<ListaOrdens> {
     final contador = DebugLoop.contador;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey.shade100,
+
       body: Column(
         children: [
           Center(child: CabecalhoListOrdens(quantidade_pendente: 30)),
