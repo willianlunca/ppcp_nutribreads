@@ -33,3 +33,27 @@ Exemplo de uso:
                 ),
 ````
 
+**cardcabecalho_exec_producao.dart:**
+Componente responsável por criar o cabealho na tela que exibe as ordens todas as ordens de produção.
+Parâmetros:
+
+| Paramêtro       | Descrição                 | Tipo     |
+|:---------------:|:-------------------------:| :------: |
+| buttonSuperior | Titulo do botão superior | String |
+
+1. buttonSuperior: *`Titulo do botão superior`* 
+2. producao: *`Titulo da ordem de produção`*
+3. linhaProd: *`Linha de produão que irá produzir`*
+4. data: *`Data de lançamento da ordem`*
+5. onTap: *`Ações a serem executadas ao clicar no botão Superior`*
+
+Exemplo de uso:
+````
+    CabecalhoListOrdens(
+                quantidade_pendente: 30,
+                onTap: () {
+                    print('Atualizando lista de ordens de produção...');
+                },
+                ),
+````
+
