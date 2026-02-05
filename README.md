@@ -6,14 +6,17 @@
 
 ## Componentes
 
-**cardcabecalho_exec_producao.dart:**
+1. **`cardcabecalho_exec_producao.dart`:**
 Componente responsável por criar o cabealho na tela que exibe as ordens todas as ordens de produção.
 Parâmetros:
-1. buttonSuperior: *`Titulo do botão superior`*
-2. producao: *`Titulo da ordem de produção`*
-3. linhaProd: *`Linha de produão que irá produzir`*
-4. data: *`Data de lançamento da ordem`*
-5. onTap: *`Ações a serem executadas ao clicar no botão Superior`*
+
+| Paramêtro       | Descrição                                            | Tipo     |
+|:---------------:|:----------------------------------------------------:| :------: |
+| buttonSuperior  | Titulo do botão superior                             | String   |
+| producao        | Titulo do botão superior                             | String   |
+| linhaProd       | Linha de produão que irá produzir                    | String   |
+| data            | Data de lançamento da ordem                          | String   |
+| onTap           | Ações a serem executadas ao clicar no botão Superior | String   |
 
 Exemplo de uso:
 ````
@@ -33,19 +36,20 @@ Exemplo de uso:
                 ),
 ````
 
-**cardcabecalho_exec_producao.dart:**
+2. **`cabecalho_list_ordens.dart`**
+
 Componente responsável por criar o cabealho na tela que exibe as ordens todas as ordens de produção.
 Parâmetros:
 
-| Paramêtro       | Descrição                 | Tipo     |
-|:---------------:|:-------------------------:| :------: |
-| buttonSuperior | Titulo do botão superior | String |
+| Paramêtro       | Descrição                                            | Tipo     |
+|:---------------:|:----------------------------------------------------:| :------: |
+| buttonSuperior  | Titulo do botão superior                             | String   |
+| producao        | Titulo do botão superior                             | String   |
+| linhaProd       | Linha de produão que irá produzir                    | String   |
+| data            | Data de lançamento da ordem                          | String   |
+| onTap           | Ações a serem executadas ao clicar no botão Superior | String   |
 
-1. buttonSuperior: *`Titulo do botão superior`* 
-2. producao: *`Titulo da ordem de produção`*
-3. linhaProd: *`Linha de produão que irá produzir`*
-4. data: *`Data de lançamento da ordem`*
-5. onTap: *`Ações a serem executadas ao clicar no botão Superior`*
+
 
 Exemplo de uso:
 ````
