@@ -10,13 +10,13 @@
 Componente responsável por criar o cabealho na tela que exibe as ordens todas as ordens de produção.
 Parâmetros:
 
-| Paramêtro       | Descrição                                            | Tipo     |
-|:---------------:|:----------------------------------------------------:| :------: |
-| buttonSuperior  | Titulo do botão superior                             | String   |
-| producao        | Titulo do botão superior                             | String   |
-| linhaProd       | Linha de produão que irá produzir                    | String   |
-| data            | Data de lançamento da ordem                          | String   |
-| onTap           | Ações a serem executadas ao clicar no botão Superior | String   |
+| Paramêtro       | Descrição                                            | Tipo           |
+|:--------------- |:---------------------------------------------------- | :------------- |
+| buttonSuperior  | Titulo do botão superior                             | String         |
+| producao        | Titulo do botão superior                             | String         |
+| linhaProd       | Linha de produão que irá produzir                    | String         |
+| data            | Data de lançamento da ordem                          | String         |
+| onTap           | Ações a serem executadas ao clicar no botão Superior | VoidCallback   |
 
 Exemplo de uso:
 ````
@@ -41,13 +41,10 @@ Exemplo de uso:
 Componente responsável por criar o cabealho na tela que exibe as ordens todas as ordens de produção.
 Parâmetros:
 
-| Paramêtro       | Descrição                                            | Tipo     |
-|:---------------:|:----------------------------------------------------:| :------: |
-| buttonSuperior  | Titulo do botão superior                             | String   |
-| producao        | Titulo do botão superior                             | String   |
-| linhaProd       | Linha de produão que irá produzir                    | String   |
-| data            | Data de lançamento da ordem                          | String   |
-| onTap           | Ações a serem executadas ao clicar no botão Superior | String   |
+| Paramêtro            | Descrição                                            | Tipo           |
+|:-------------------- |:---------------------------------------------------- | :------------  |
+| quantidade_pendente  | Quantidade de ordens pendentes                       | int.           |
+| onTap                | Ações a serem executadas ao clicar no botão Superior | VoidCallback   |
 
 
 
