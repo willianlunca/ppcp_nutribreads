@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ppcp_nutribreads/screens/lista_ordens.dart';
 
 class CabecalhoExecProducao extends StatelessWidget {
-  final String buttonVoltar;
+  final String buttonSuperior;
   final String producao;
   final String linhaProd;
   final String data;
@@ -10,7 +10,7 @@ class CabecalhoExecProducao extends StatelessWidget {
 
   const CabecalhoExecProducao({
     super.key,
-    required this.buttonVoltar,
+    required this.buttonSuperior,
     required this.producao,
     required this.linhaProd,
     required this.data,
@@ -39,7 +39,7 @@ class CabecalhoExecProducao extends StatelessWidget {
                   //DEVE SER SUBISTITUIDO POR LOGICAS E PUXAR OS ITENS REAIS DA LISTA.
                   onTap: onTap,
                   child: Text(
-                    buttonVoltar,
+                    buttonSuperior,
                     style: TextStyle(
                       fontWeight: FontWeight.w300,
                       fontSize: 14,

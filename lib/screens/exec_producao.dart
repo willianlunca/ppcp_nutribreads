@@ -13,7 +13,7 @@ class ExecProducao extends StatelessWidget {
         child: Column(
           children: [
             CabecalhoExecProducao(
-              buttonVoltar: 'Produtos da Ordem',
+              buttonSuperior: 'Produtos da Ordem',
               producao: 'OP-2026-0147',
               linhaProd: 'Linha 01',
               data: '03/02/2026',
