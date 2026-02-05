@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:ppcp_nutribreads/screens/lista_ordens.dart';
 
-class CabecalhoProd extends StatelessWidget {
+class CabecalhoExecProducao extends StatelessWidget {
   final String buttonVoltar;
   final String producao;
   final String linhaProd;
   final String data;
   final VoidCallback? onTap;
 
-  const CabecalhoProd({
+  const CabecalhoExecProducao({
     super.key,
     required this.buttonVoltar,
     required this.producao,
@@ -22,7 +22,7 @@ class CabecalhoProd extends StatelessWidget {
     return SizedBox(
       child: Container(
         width: MediaQuery.of(context).size.width * 0.60,
-        height: 120,
+        height: 130,
         decoration: BoxDecoration(),
         margin: EdgeInsets.only(top: 80),
         child: Column(

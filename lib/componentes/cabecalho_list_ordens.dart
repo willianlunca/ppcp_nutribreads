@@ -2,14 +2,19 @@ import 'package:flutter/material.dart';
 
 class CabecalhoListOrdens extends StatelessWidget {
   final int quantidade_pendente;
-  const CabecalhoListOrdens({super.key, required this.quantidade_pendente});
+  final VoidCallback? onTap;
+  const CabecalhoListOrdens({
+    super.key,
+    required this.quantidade_pendente,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       child: Container(
         width: MediaQuery.of(context).size.width * 0.60,
-        height: 90,
+        height: 120,
         decoration: BoxDecoration(),
         margin: EdgeInsets.only(top: 80),
         child: Column(
@@ -23,11 +28,24 @@ class CabecalhoListOrdens extends StatelessWidget {
                   child: Icon(Icons.refresh, size: 14, color: Colors.black),
                 ),
                 InkWell(
-                  onTap: () {
-                    print('Botão Atualizar Lista de Produção');
-                  },
+                  onTap: onTap,
                   child: Text(
                     'Atualizar Lista de Produção',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w300,
+                      fontSize: 14,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: 18),
+                  child: Text(
+                    'Selecione:',
                     style: TextStyle(
                       fontWeight: FontWeight.w300,
                       fontSize: 14,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ppcp_nutribreads/screens/exec_producao.dart';
 
 class CardProduto extends StatelessWidget {
   final String titulo;
@@ -37,7 +38,8 @@ class CardProduto extends StatelessWidget {
         clipBehavior: Clip.antiAlias, // recorta o ripple
         child: InkWell(
           borderRadius: radius,
-          onTap: onTap ?? () => print('Botão Produção pressionado'),
+          onTap: onTap,
+
           child: Ink(
             // 🔑 Ink + decoração = splash certinho por dentro
             padding: const EdgeInsets.all(12),

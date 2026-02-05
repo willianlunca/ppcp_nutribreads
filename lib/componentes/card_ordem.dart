@@ -8,6 +8,7 @@ class CardOrdem extends StatelessWidget {
   final String data;
   final int qtdItens;
   final int qtdProduzidas;
+  final VoidCallback? onTap;
 
   const CardOrdem({
     super.key,
@@ -17,6 +18,7 @@ class CardOrdem extends StatelessWidget {
     required this.data,
     required this.qtdItens,
     required this.qtdProduzidas,
+    this.onTap,
   });
 
   double get progresso {
@@ -74,12 +76,7 @@ class CardOrdem extends StatelessWidget {
         clipBehavior: Clip.antiAlias, // recorta o ripple
         child: InkWell(
           borderRadius: radius,
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const ListaPoroducao()),
-            );
-          },
+          onTap: onTap,
 
           child: Ink(
             width: MediaQuery.of(context).size.width * 0.60,
