@@ -3,7 +3,7 @@ import 'package:ppcp_nutribreads/screens/lista_ordens.dart';
 
 class CabecalhoExecProducao extends StatelessWidget {
   final String buttonSuperior;
-  final String producao;
+  final String ordeProducao;
   final String linhaProd;
   final String data;
   final VoidCallback? onTap;
@@ -11,7 +11,7 @@ class CabecalhoExecProducao extends StatelessWidget {
   const CabecalhoExecProducao({
     super.key,
     required this.buttonSuperior,
-    required this.producao,
+    required this.ordeProducao,
     required this.linhaProd,
     required this.data,
     this.onTap,
@@ -56,7 +56,7 @@ class CabecalhoExecProducao extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(top: 18),
                   child: Text(
-                    'OP: $producao',
+                    'Ordem de Produção',
                     style: TextStyle(
                       fontWeight: FontWeight.w300,
                       fontSize: 14,
@@ -74,7 +74,7 @@ class CabecalhoExecProducao extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(top: 2),
                   child: Text(
-                    'Itens da Ordem',
+                    ordeProducao,
                     style: TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: 20,

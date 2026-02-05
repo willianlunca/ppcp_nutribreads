@@ -14,7 +14,7 @@ class ExecProducao extends StatelessWidget {
           children: [
             CabecalhoExecProducao(
               buttonSuperior: 'Produtos da Ordem',
-              producao: 'OP-2026-0147',
+              ordeProducao: 'OP-2026-0147',
               linhaProd: 'Linha 01',
               data: '03/02/2026',
               onTap: () {

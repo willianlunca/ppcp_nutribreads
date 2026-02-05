@@ -7,14 +7,14 @@
 ## Componentes
 
 1. **`cardcabecalho_exec_producao.dart`:**
-Componente responsável por criar o cabealho na tela que exibe as ordens todas as ordens de produção.
+Componente responsável por criar o cabealho na tela de execução de produção.
 Parâmetros:
 
 | Paramêtro       | Descrição                                            | Tipo           |
 |:--------------- |:---------------------------------------------------- | :------------- |
 | buttonSuperior  | Titulo do botão superior                             | String         |
-| producao        | Titulo do botão superior                             | String         |
-| linhaProd       | Linha de produão que irá produzir                    | String         |
+| ordeProducao    | Titulo da ordem de produção                          | String         |
+| linhaProd       | Linha de produção que irá produzir                   | String         |
 | data            | Data de lançamento da ordem                          | String         |
 | onTap           | Ações a serem executadas ao clicar no botão Superior | VoidCallback   |
 
@@ -43,7 +43,7 @@ Parâmetros:
 
 | Paramêtro            | Descrição                                            | Tipo           |
 |:-------------------- |:---------------------------------------------------- | :------------  |
-| quantidade_pendente  | Quantidade de ordens pendentes                       | int.           |
+| quantidade_pendente  | Quantidade de ordens pendentes                       | int            |
 | onTap                | Ações a serem executadas ao clicar no botão Superior | VoidCallback   |
 
 
@@ -58,3 +58,35 @@ Exemplo de uso:
                 ),
 ````
 
+3. **`card_ordem.dart`**
+
+Componente responsável por montar na tela o card que contem uma ordem de produção.
+ 
+| Paramêtro            | Descrição                                            | Tipo           |
+|:-------------------- |:---------------------------------------------------- | :------------  |
+| descricaoOrdem       | Descrição da ordem                                   | String         |
+| prioridade           | Nivel de prioridade da ordem                         | String         |
+| linhaProducao        | Local onde será produzido                            | String         |
+| data                 | Data de criação da ordem.                            | String         |
+| qtdProduzidas        | Quantidade de itens já produzidos da ordem.          | String         |
+| onTap                | Ações a serem executadas ao clicar no botão Superior | VoidCallback   |
+
+Exemplo de uso:
+````
+    CardOrdem(
+                        descricaoOrdem: 'OP-2026-0147',
+                        prioridade: contador.toString(), // ✅ aqui
+                        linhaProducao: 'Linha 02',
+                        data: '02/02/2026',
+                        qtdItens: 8,
+                        qtdProduzidas: 3, // ✅ se quiser mudar também
+                        onTap: () {
+                            Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const ListaPoroducao(),
+                            ),
+                            );
+                        },
+                        ),
+````
