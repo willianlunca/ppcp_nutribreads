@@ -101,7 +101,7 @@ Exemplo de uso:
 ````
     CardOrdem(
                         descricaoOrdem: 'OP-2026-0147',
-                        prioridade: contador.toString(),
+                        prioridade: '1',  // ( 1,2,3 )
                         linhaProducao: 'Linha 02',
                         data: '02/02/2026',
                         qtdItens: 8,

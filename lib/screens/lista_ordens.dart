@@ -54,7 +54,8 @@ class _ListaOrdensState extends State<ListaOrdens> {
                   children: [
                     CardOrdem(
                       descricaoOrdem: 'OP-2026-0147',
-                      prioridade: contador.toString(), // ✅ aqui
+                      prioridade:
+                          '2', //contador.toString(), // para alternar. ( dubug )
                       linhaProducao: 'Linha 02',
                       data: '02/02/2026',
                       qtdItens: 8,
