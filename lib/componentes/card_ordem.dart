@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ppcp_nutribreads/screens/lista_produtos_ordens.dart';
 
 class CardOrdem extends StatelessWidget {
   final String descricaoOrdem;

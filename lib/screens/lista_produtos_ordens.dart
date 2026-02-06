@@ -18,7 +18,7 @@ class ListaPoroducao extends StatelessWidget {
 
         children: [
           CabecalhoProd(
-            buttonVoltar: 'Consultar Ordens',
+            buttonSuperior: 'Consultar Ordens',
             producao: '32324',
             linhaProd: 'Turno 01',
             data: '30/01/2026',

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ppcp_nutribreads/screens/exec_producao.dart';
 
 class CardProduto extends StatelessWidget {
   final String titulo;
