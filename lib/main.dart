@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ppcp_nutribreads/functions/loop.dart';
-import 'package:ppcp_nutribreads/screens/lista_ordens.dart';
+import 'package:ppcp_nutribreads/screens/login.dart';
+
 
 void main() {
   DebugLoop.iniciar();
@@ -15,8 +17,18 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'PPCP Nutribreads',
+
+      // 🌎 pt-BR
+      locale: const Locale('pt', 'BR'),
+      supportedLocales: const [Locale('pt', 'BR')],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+
       theme: ThemeData(),
-      home: const ListaOrdens(), // 👈 SUA TELA INICIAL
+      home: const Login(),
     );
   }
 }
