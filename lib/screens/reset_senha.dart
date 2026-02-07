@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ppcp_nutribreads/colors/colors.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:ppcp_nutribreads/screens/reset_senha.dart';
+import 'package:ppcp_nutribreads/screens/login.dart';
 
-class Login extends StatelessWidget {
-  const Login({super.key});
+class ResetSenha extends StatelessWidget {
+  const ResetSenha({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class Login extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(16),
               width: MediaQuery.of(context).size.width * 0.60,
-              height: 400,
+              height: 300,
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(color: Colors.grey.shade300, width: 2.0),
@@ -40,7 +40,7 @@ class Login extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.only(top: 25),
                         child: Text(
-                          'Credenciais de acesso',
+                          'E-mail para recuperação de senha',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
@@ -66,24 +66,6 @@ class Login extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 8),
-                    child: TextField(
-                      obscureText: true,
-                      obscuringCharacter: '•',
-                      selectionControls: CupertinoTextSelectionControls(),
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(
-                          vertical: 20,
-                          horizontal: 12,
-                        ),
-                        labelText: 'Senha',
-                        hintText: 'Digite sua senha',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                  ),
-                  Container(
                     margin: EdgeInsets.only(top: 16),
                     width: double.infinity, // ocupa toda a largura
                     height: 64,
@@ -94,18 +76,24 @@ class Login extends StatelessWidget {
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: NutribreadsColors.azulEscuro,
+                        
+                        
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
+                          
+                          
                         ),
+                        
                       ),
+                      
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(Icons.login, size: 20, color: Colors.white),
+                          Icon(Icons.lock_reset, size: 20, color: Colors.white),
                           SizedBox(width: 8),
                           Text(
-                            'Entrar',
+                            'Recuperar Senha',
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
@@ -129,12 +117,12 @@ class Login extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const ResetSenha(),
+                                builder: (context) => const Login(),
                               ),
                             );
                           },
                           child: Text(
-                            'Esqueceu sua senha?',
+                            'Voltar a tela de login?',
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w300,
