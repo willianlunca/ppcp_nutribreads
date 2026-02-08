@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:ppcp_nutribreads/colors/colors.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:ppcp_nutribreads/screens/lista_ordens.dart';
 import 'package:ppcp_nutribreads/screens/reset_senha.dart';
+import 'package:ppcp_nutribreads/services/auth.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
   const Login({super.key});
 
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  final AuthService _auth = AuthService();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController senhaController = TextEditingController();
+  final session = Supabase.instance.client.auth.currentSession;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,6 +64,11 @@ class Login extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.only(top: 8),
                     child: TextField(
+                      autofillHints: const [
+                        AutofillHints.username,
+                        AutofillHints.email,
+                      ],
+                      controller: emailController,
                       selectionControls: CupertinoTextSelectionControls(),
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
@@ -68,6 +85,8 @@ class Login extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.only(top: 8),
                     child: TextField(
+                      autofillHints: const [AutofillHints.password],
+                      controller: senhaController,
                       obscureText: true,
                       obscuringCharacter: '•',
                       selectionControls: CupertinoTextSelectionControls(),
@@ -88,10 +107,45 @@ class Login extends StatelessWidget {
                     width: double.infinity, // ocupa toda a largura
                     height: 64,
                     child: ElevatedButton(
-                      onPressed: () {
-                        FocusScope.of(context).unfocus(); // 🔑 fecha o teclado
-                        // ação do login
+                      onPressed: () async {
+                        FocusScope.of(context).unfocus();
+                        final email = emailController.text.trim();
+                        final senha = senhaController.text;
+                        if (email.isEmpty || senha.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Preencha e-mail e senha'),
+                            ),
+                          );
+                          return;
+                        }
+
+                        try {
+                          final response = await _auth.signIn(
+                            email: email,
+                            password: senha,
+                          );
+
+                          if (response.user != null) {
+                            // login OK
+                            print('Usuário logado: ${response.user!.email}');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ListaOrdens(),
+                              ),
+                            );
+                          }
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Erro ao logar: $e'),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        }
                       },
+
                       style: ElevatedButton.styleFrom(
                         backgroundColor: NutribreadsColors.azulEscuro,
                         shape: RoundedRectangleBorder(
