@@ -23,6 +23,7 @@ class CabecalhoExecProducao extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.60,
         height: 130,
         decoration: BoxDecoration(),
+
         margin: EdgeInsets.only(top: 80),
         child: Column(
           children: [
@@ -68,7 +69,7 @@ class CabecalhoExecProducao extends StatelessWidget {
 
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
                   margin: EdgeInsets.only(top: 2),
@@ -78,6 +79,26 @@ class CabecalhoExecProducao extends StatelessWidget {
                       fontWeight: FontWeight.w900,
                       fontSize: 20,
                       color: Colors.black,
+                    ),
+                  ),
+                ),
+                Material(
+                  borderRadius: BorderRadius.circular(4),
+                  clipBehavior: Clip.antiAlias, // 🔑 recorta o splash
+                  child: InkWell(
+                    onTap: () {
+                      print('logout clicado');
+                      // Aqui você pode adicionar a lógica para realizar o logout
+                    },
+                    child: Ink(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Icon(
+                        Icons.logout,
+                        size: 23,
+                        color: Colors.grey.shade700,
+                      ),
                     ),
                   ),
                 ),
