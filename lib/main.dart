@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
 
       theme: ThemeData(),
       //home: const Login(),
-      home: const ExecProducao(),
+      home: const Login(),
     );
   }
 }

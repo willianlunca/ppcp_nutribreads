@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ppcp_nutribreads/colors/colors.dart';
 import 'package:ppcp_nutribreads/componentes/cabecalho_exec_producao.dart';
 import 'package:ppcp_nutribreads/screens/lista_produtos_ordens.dart';
 
@@ -11,6 +12,8 @@ class ExecProducao extends StatelessWidget {
         '3'; // Deve vir da api os usuarios que estão executando a produção.
     String linhaProd =
         'Linha 01'; // Deve vir da api qual linha de produção está executando.
+    String progresso = '10'; // Deve vir da api o progresso da produção.
+    String total = '30'; // Deve vir da api o progresso da produção.
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       body: Center(
@@ -106,6 +109,55 @@ class ExecProducao extends StatelessWidget {
                     ),
                   ],
                 ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(16),
+              margin: EdgeInsets.only(top: 20),
+              width: 600,
+              height: 150,
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Progresso',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Container(
+                        height: 12,
+                        margin: EdgeInsets.only(top: 8),
+                        child: LinearProgressIndicator(
+                          value: 0.5,
+                          backgroundColor: Colors.grey.shade300,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            NutribreadsColors.azulEscuro,
+                          ),
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            '$progresso / $total',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey.shade700,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ],
