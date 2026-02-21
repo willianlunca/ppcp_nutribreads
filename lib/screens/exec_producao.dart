@@ -19,7 +19,7 @@ class _ExecProducaoState extends State<ExecProducao> {
       'Linha 01'; // Deve vir da api qual linha de produção está executando.
   String progresso = '10'; // Deve vir da api o progresso da produção.
   String meta = '300';
-  int porcentagem = 44;
+  int porcentagem = 0;
   int qtdProduzida = 0;
   bool mostrarCard = false;
   bool pausar = false;
@@ -184,7 +184,7 @@ class _ExecProducaoState extends State<ExecProducao> {
                                 margin: EdgeInsets.only(top: 8),
                                 decoration: BoxDecoration(),
                                 child: LinearProgressIndicator(
-                                  value: 0.5,
+                                  value: porcentagem / 100,
                                   backgroundColor: Colors.grey.shade300,
                                   borderRadius: BorderRadius.circular(8),
                                   valueColor: AlwaysStoppedAnimation<Color>(
@@ -410,6 +410,77 @@ class _ExecProducaoState extends State<ExecProducao> {
                           } else {
                             cronometro?.iniciar(); // ▶ retoma
                           }
+                        },
+                        onAdicionar01: () {
+                          setState(() {
+                            qtdProduzida += 1;
+                            porcentagem = (qtdProduzida / int.parse(meta) * 100)
+                                .toInt();
+                          });
+                        },
+                        onAdicionar05: () {
+                          setState(() {
+                            qtdProduzida += 5;
+                            porcentagem = (qtdProduzida / int.parse(meta) * 100)
+                                .toInt();
+                          });
+                        },
+                        onAdicionar10: () {
+                          setState(() {
+                            qtdProduzida += 10;
+                            porcentagem = (qtdProduzida / int.parse(meta) * 100)
+                                .toInt();
+                          });
+                        },
+                        onAdicionar50: () {
+                          setState(() {
+                            qtdProduzida += 50;
+                            porcentagem = (qtdProduzida / int.parse(meta) * 100)
+                                .toInt();
+                          });
+                        },
+                        onAdicionar100: () {
+                          setState(() {
+                            qtdProduzida += 100;
+                            porcentagem = (qtdProduzida / int.parse(meta) * 100)
+                                .toInt();
+                          });
+                        },
+                        onRemover01: () {
+                          setState(() {
+                            qtdProduzida -= 1;
+                            porcentagem = (qtdProduzida / int.parse(meta) * 100)
+                                .toInt();
+                          });
+                        },
+
+                        onRemover05: () {
+                          setState(() {
+                            qtdProduzida -= 5;
+                            porcentagem = (qtdProduzida / int.parse(meta) * 100)
+                                .toInt();
+                          });
+                        },
+                        onRemover10: () {
+                          setState(() {
+                            qtdProduzida -= 10;
+                            porcentagem = (qtdProduzida / int.parse(meta) * 100)
+                                .toInt();
+                          });
+                        },
+                        onRemover50: () {
+                          setState(() {
+                            qtdProduzida -= 50;
+                            porcentagem = (qtdProduzida / int.parse(meta) * 100)
+                                .toInt();
+                          });
+                        },
+                        onRemover100: () {
+                          setState(() {
+                            qtdProduzida -= 100;
+                            porcentagem = (qtdProduzida / int.parse(meta) * 100)
+                                .toInt();
+                          });
                         },
                       ),
 
