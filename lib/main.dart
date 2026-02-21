@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ppcp_nutribreads/functions/loop.dart';
+import 'package:ppcp_nutribreads/screens/colaboradores.dart';
 import 'package:ppcp_nutribreads/screens/exec_producao.dart';
 import 'package:ppcp_nutribreads/screens/login.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
 
       theme: ThemeData(),
       //home: const Login(),
-      home: const Login(),
+      home: const Colaboradores(),
     );
   }
 }
