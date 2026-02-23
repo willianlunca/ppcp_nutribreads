@@ -1,6 +1,24 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+// Verificar se o usuário está logado
+void debugUsuarioLogado() {
+  final user = Supabase.instance.client.auth.currentUser;
+  print('user logado: ${user?.id ?? "null"}');
+}
 
+// Encerrar sessão
+Future<void> encerrarSessao() async {
+  final supabase = Supabase.instance.client;
+
+  try {
+    await supabase.auth.signOut();
+    print('Sessão encerrada com sucesso!');
+  } catch (e) {
+    print('Erro ao encerrar sessão: $e');
+  }
+}
+
+// Inserir ordem
 Future<List<Map<String, dynamic>>> inserirOrdem() async {
   try {
     final data = await Supabase.instance.client.from('lista_ordens').insert({
@@ -19,5 +37,36 @@ Future<List<Map<String, dynamic>>> inserirOrdem() async {
     print('Erro ao inserir ordem: $e');
     rethrow;
   }
+}
+
+// Inserir colaborador
+Future<void> inserirColaborador({
+  required String nome,
+  required String cpf, // <-- String agora
+  required DateTime aniversario,
+}) async {
+  final supabase = Supabase.instance.client;
+
+  await supabase.from('colaboradores').insert({
+    'nome': nome,
+    'cpf': cpf,
+    'aniversario': aniversario.toIso8601String().split('T').first,
+  });
+
+  print('Inserido OK');
+}
+
+// Buscar colaboradores
+Future<List<Map<String, dynamic>>> buscarColaboradores() async {
+  final supabase = Supabase.instance.client;
+
+  final data = await supabase
+      .from('colaboradores')
+      .select('*')
+      .order('id', ascending: false); // se tiver coluna id
+
+  final lista = List<Map<String, dynamic>>.from(data);
+  print('Total encontrados: ${lista.length}');
+  return lista;
 }
 

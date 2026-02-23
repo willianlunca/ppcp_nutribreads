@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ppcp_nutribreads/colors/colors.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:ppcp_nutribreads/screens/colaboradores.dart';
 import 'package:ppcp_nutribreads/screens/lista_ordens.dart';
 import 'package:ppcp_nutribreads/screens/reset_senha.dart';
 import 'package:ppcp_nutribreads/services/auth.dart';
@@ -132,7 +133,7 @@ class _LoginState extends State<Login> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const ListaOrdens(),
+                                builder: (context) => const Colaboradores(),
                               ),
                             );
                           }
