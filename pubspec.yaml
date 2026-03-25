@@ -35,7 +35,14 @@ dependencies:
   lottie: ^3.1.2
   flutter_native_splash: ^2.4.1
   video_player: ^2.9.1 
+  image_picker: ^1.1.2
+  crop_your_image: ^1.1.0
+  pdf: ^3.11.0
+  printing: ^5.13.0
+  path_provider: ^2.1.5
+  
 
+  
   flutter_localizations:
     sdk: flutter
 

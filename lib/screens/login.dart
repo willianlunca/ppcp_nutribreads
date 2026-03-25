@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ppcp_nutribreads/colors/colors.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:ppcp_nutribreads/screens/colaboradores.dart';
-import 'package:ppcp_nutribreads/screens/lista_ordens.dart';
+import 'package:ppcp_nutribreads/screens/modulos.dart';
+import 'package:ppcp_nutribreads/screens/ppcp_colaboradores.dart';
+import 'package:ppcp_nutribreads/screens/ppcp_lista_ordens.dart';
 import 'package:ppcp_nutribreads/screens/reset_senha.dart';
 import 'package:ppcp_nutribreads/services/auth.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -36,7 +37,7 @@ class _LoginState extends State<Login> {
             ),
             Container(
               padding: EdgeInsets.all(16),
-              width: MediaQuery.of(context).size.width * 0.60,
+              width: MediaQuery.of(context).size.width * 0.90,
               height: 400,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -74,8 +75,8 @@ class _LoginState extends State<Login> {
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
-                          vertical: 20,
-                          horizontal: 12,
+                          vertical: 15,
+                          horizontal: 10,
                         ),
                         labelText: 'E-mail',
                         hintText: 'Digite seu e-mail',
@@ -94,8 +95,8 @@ class _LoginState extends State<Login> {
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
-                          vertical: 20,
-                          horizontal: 12,
+                          vertical: 15,
+                          horizontal: 10,
                         ),
                         labelText: 'Senha',
                         hintText: 'Digite sua senha',
@@ -106,7 +107,7 @@ class _LoginState extends State<Login> {
                   Container(
                     margin: EdgeInsets.only(top: 16),
                     width: double.infinity, // ocupa toda a largura
-                    height: 64,
+                    height: 55,
                     child: ElevatedButton(
                       onPressed: () async {
                         FocusScope.of(context).unfocus();
@@ -133,7 +134,8 @@ class _LoginState extends State<Login> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const Colaboradores(),
+                                //builder: (context) => const Colaboradores(),
+                                builder: (context) => const Modulos(),
                               ),
                             );
                           }

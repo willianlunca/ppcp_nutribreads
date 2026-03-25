@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ppcp_nutribreads/functions/loop.dart';
-import 'package:ppcp_nutribreads/screens/colaboradores.dart';
-import 'package:ppcp_nutribreads/screens/exec_producao.dart';
+import 'package:ppcp_nutribreads/screens/logist_canhoto.dart';
+import 'package:ppcp_nutribreads/screens/ppcp_colaboradores.dart';
+import 'package:ppcp_nutribreads/screens/ppcp_lista_ordens.dart';
+import 'package:ppcp_nutribreads/screens/logist_canhoto.dart';
 import 'package:ppcp_nutribreads/screens/login.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -39,8 +41,9 @@ class MyApp extends StatelessWidget {
       ],
 
       theme: ThemeData(),
-      //home: const Login(),
-      home: const Colaboradores(),
+      home: const Login(),
+      //home: const Colaboradores(),
+      //home: const LogistCanhoto(),
     );
   }
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ppcp_nutribreads/colors/colors.dart';
-import 'package:ppcp_nutribreads/componentes/cabecalho_exec_producao.dart';
-import 'package:ppcp_nutribreads/componentes/card_exec_producao.dart';
+import 'package:ppcp_nutribreads/componentes/ppcp_cabecalho_exec_producao.dart';
+import 'package:ppcp_nutribreads/componentes/ppcp_card_exec_producao.dart';
 import 'package:ppcp_nutribreads/functions/cronometro.dart';
-import 'package:ppcp_nutribreads/screens/lista_produtos_ordens.dart';
+import 'package:ppcp_nutribreads/screens/ppcp_lista_produtos_ordens.dart';
 
 class ExecProducao extends StatefulWidget {
   const ExecProducao({super.key});
