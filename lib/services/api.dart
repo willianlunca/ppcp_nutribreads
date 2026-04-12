@@ -70,3 +70,22 @@ Future<List<Map<String, dynamic>>> buscarColaboradores() async {
   return lista;
 }
 
+class PermissoesService {
+  final SupabaseClient _supabase = Supabase.instance.client;
+
+  /// Busca todas as permissões do usuário logado
+  Future<List<Map<String, dynamic>>> buscarPermissoes() async {
+    final user = _supabase.auth.currentUser;
+
+    if (user == null) {
+      throw Exception('Usuário não está logado');
+    }
+
+    final response = await _supabase
+        .from('permissoes_modulos')
+        .select()
+        .eq('user', user.id); // ajuste se o nome da coluna for diferente
+
+    return List<Map<String, dynamic>>.from(response);
+  }
+}

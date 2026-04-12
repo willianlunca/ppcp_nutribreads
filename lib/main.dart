@@ -1,12 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:ppcp_nutribreads/componentes/load.dart';
 import 'package:ppcp_nutribreads/functions/loop.dart';
+import 'package:ppcp_nutribreads/screens/screenLoad.dart';
 import 'package:ppcp_nutribreads/screens/logist_canhoto.dart';
+import 'package:ppcp_nutribreads/screens/modulos.dart';
 import 'package:ppcp_nutribreads/screens/ppcp_colaboradores.dart';
 import 'package:ppcp_nutribreads/screens/ppcp_lista_ordens.dart';
 import 'package:ppcp_nutribreads/screens/logist_canhoto.dart';
 import 'package:ppcp_nutribreads/screens/login.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+class AuthCheck extends StatefulWidget {
+  const AuthCheck({super.key});
+
+  @override
+  State<AuthCheck> createState() => _AuthCheckState();
+}
+
+class _AuthCheckState extends State<AuthCheck> {
+  Widget? destino;
+
+  @override
+  void initState() {
+    super.initState();
+    verificarLogin();
+  }
+
+  Future<void> verificarLogin() async {
+    await Future.delayed(const Duration(seconds: 2)); // tempo da animação
+
+    final session = Supabase.instance.client.auth.currentSession;
+
+    if (!mounted) return;
+
+    setState(() {
+      destino = session != null ? const Modulos() : const Login();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (destino == null) {
+      return Scaffold(
+        body: Center(
+          child: Lottie.asset(
+            'assets/animations/animacao_azul_escuro.json',
+            width: 100,
+            height: 100,
+          ),
+        ),
+      );
+    }
+
+    return destino!;
+  }
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,9 +94,12 @@ class MyApp extends StatelessWidget {
       ],
 
       theme: ThemeData(),
-      home: const Login(),
+      home: const AuthCheck(),
+      //home: const Login(),
       //home: const Colaboradores(),
       //home: const LogistCanhoto(),
+      //home: const ListaOrdens(),
+      //home: LoadWidget(),
     );
   }
 }

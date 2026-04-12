@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ppcp_nutribreads/colors/colors.dart';
+import 'package:ppcp_nutribreads/screens/login.dart';
+import 'package:ppcp_nutribreads/services/auth.dart';
 
 class CabecalhoColaboradores extends StatelessWidget {
   final String buttonSuperior;
@@ -82,8 +84,14 @@ class CabecalhoColaboradores extends StatelessWidget {
                   borderRadius: BorderRadius.circular(4),
                   clipBehavior: Clip.antiAlias, // 🔑 recorta o splash
                   child: InkWell(
-                    onTap: () {
-                      print('logout clicado');
+                    onTap: () async {
+                      await AuthService().signOut();
+
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (_) => const Login()),
+                        (route) => false,
+                      );
                       // Aqui você pode adicionar a lógica para realizar o logout
                     },
                     child: Ink(

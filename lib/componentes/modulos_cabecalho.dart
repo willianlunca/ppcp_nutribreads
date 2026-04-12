@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ppcp_nutribreads/colors/colors.dart';
+import 'package:ppcp_nutribreads/screens/login.dart';
+import 'package:ppcp_nutribreads/services/auth.dart';
 
 class ModulosCabecalho extends StatelessWidget {
   final String titulo;
@@ -19,18 +21,33 @@ class ModulosCabecalho extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double largura = MediaQuery.of(context).size.width;
+    int colunas = largura >= 1200
+        ? 5
+        : largura >= 900
+        ? 4
+        : largura >= 600
+        ? 3
+        : largura >= 400
+        ? 2 // iPhone Pro Max
+        : 1; // iPhone Pro e menores
+
+    double larguraCard = (largura / colunas) - 40;
+    double alturaCard = larguraCard * 0.9; // mantém proporção
+    double tamanhoTexto = larguraCard * 0.10;
+    double tamanhoBox = larguraCard * 0.4;
     return SizedBox(
       child: Container(
         width: MediaQuery.of(context).size.width * 0.85,
-        constraints: const BoxConstraints(minHeight: 130),
+        constraints: BoxConstraints(minHeight: alturaCard / 1.2),
         margin: const EdgeInsets.only(top: 80),
         child: Column(
           children: [
             Row(
               children: [
                 Container(
-                  width: 150,
-                  height: 45,
+                  width: tamanhoBox * 2.2,
+                  height: tamanhoBox / 1.2,
                   margin: const EdgeInsets.only(bottom: 0),
                   decoration: BoxDecoration(
                     color: Colors.grey.shade200,
@@ -38,23 +55,23 @@ class ModulosCabecalho extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      Container(
+                      SizedBox(
                         child: Row(
                           children: [
                             Container(
-                              width: 30,
-                              height: 30,
+                              width: alturaCard / 5,
+                              height: alturaCard / 5,
                               margin: const EdgeInsets.only(left: 10),
                               decoration: BoxDecoration(
-                                color: NutribreadsColors.azulMedio,
+                                color: NutribreadsColors.azulEscuro,
                                 borderRadius: BorderRadius.circular(100),
                               ),
                               child: Center(
                                 child: Text(
                                   iniciaisNome,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 12,
+                                    fontSize: tamanhoTexto / 1.3,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
@@ -71,8 +88,8 @@ class ModulosCabecalho extends StatelessWidget {
                             margin: const EdgeInsets.only(left: 5),
                             child: Text(
                               nomeCompleto,
-                              style: const TextStyle(
-                                fontSize: 12,
+                              style: TextStyle(
+                                fontSize: tamanhoTexto / 1.4,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.black,
                               ),
@@ -84,8 +101,8 @@ class ModulosCabecalho extends StatelessWidget {
                               children: [
                                 Text(
                                   cargo,
-                                  style: const TextStyle(
-                                    fontSize: 10,
+                                  style: TextStyle(
+                                    fontSize: tamanhoTexto / 1.5,
                                     color: Colors.black,
                                     fontWeight: FontWeight.w300,
                                   ),
@@ -110,12 +127,12 @@ class ModulosCabecalho extends StatelessWidget {
                           children: [
                             Container(
                               margin: const EdgeInsets.only(top: 5),
-                              child: const Text(
+                              child: Text(
                                 'Area de Trabalho',
                                 softWrap: true,
                                 style: TextStyle(
                                   fontWeight: FontWeight.w300,
-                                  fontSize: 14,
+                                  fontSize: tamanhoTexto,
                                   color: Colors.black,
                                 ),
                               ),
@@ -136,9 +153,9 @@ class ModulosCabecalho extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 2),
                   child: Text(
                     titulo,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.w900,
-                      fontSize: 20,
+                      fontSize: tamanhoTexto * 1.2,
                       color: Colors.black,
                     ),
                   ),
@@ -147,8 +164,65 @@ class ModulosCabecalho extends StatelessWidget {
                   borderRadius: BorderRadius.circular(4),
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
-                    onTap: () {
-                      print('logout clicado');
+                    onTap: () async {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text(
+                              'Sair da Conta',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                            content: Text(
+                              'Deseja realmente sair?',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text(
+                                  'Cancelar',
+                                  style: TextStyle(
+                                    color: NutribreadsColors.azulEscuro,
+                                  ),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () async {
+                                  Navigator.pop(context); // fecha o dialog
+
+                                  await AuthService().signOut();
+
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => const Login(),
+                                    ),
+                                    (route) => false,
+                                  );
+                                },
+                                child: Text(
+                                  'Sair',
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                      /*await AuthService().signOut();
+
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (_) => const Login()),
+                        (route) => false,
+                      );
+                      */
+                      // Aqui você pode adicionar a lógica para realizar o logout
                     },
                     child: Ink(
                       decoration: BoxDecoration(

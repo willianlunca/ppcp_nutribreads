@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:ppcp_nutribreads/colors/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ppcp_nutribreads/screens/modulos.dart';
@@ -131,6 +132,26 @@ class _LoginState extends State<Login> {
                           if (response.user != null) {
                             // login OK
                             print('Usuário logado: ${response.user!.email}');
+                            showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (_) {
+                                return Center(
+                                  child: Container(
+                                    padding: const EdgeInsets.all(20),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    child: Lottie.asset(
+                                      'assets/animations/animacao_azul_escuro.json',
+                                      width: 100,
+                                      height: 100,
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
                             Navigator.push(
                               context,
                               MaterialPageRoute(
