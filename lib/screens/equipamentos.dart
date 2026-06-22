@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:ppcp_nutribreads/colors/colors.dart';
 import 'package:ppcp_nutribreads/componentes/card_equipamentos.dart';
 import 'package:ppcp_nutribreads/screens/modulos.dart';
+import 'package:mqtt_client/mqtt_client.dart';
+import 'package:mqtt_client/mqtt_server_client.dart';
+import 'package:ppcp_nutribreads/functions/mqtt_subscribe.dart';
 
 class Equipamentos extends StatefulWidget {
   const Equipamentos({super.key});
@@ -113,7 +116,6 @@ class _EquipamentosState extends State<Equipamentos> {
               ),
             ),
             Container(
-              width: MediaQuery.of(context).size.width * 0.9,
               margin: EdgeInsets.only(top: alturaTela / 5),
               height: alturaTela * 0.7,
               decoration: BoxDecoration(
@@ -123,7 +125,7 @@ class _EquipamentosState extends State<Equipamentos> {
               child: Column(
                 children: [
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.8,
+                    width: MediaQuery.of(context).size.width * 0.9,
                     margin: EdgeInsets.only(top: alturaTela / 5),
                     child: TextField(
                       decoration: InputDecoration(
@@ -185,33 +187,3 @@ class _EquipamentosState extends State<Equipamentos> {
     );
   }
 }
-
-
-/**
- * 
- * Row(
-                                    children: [
-                                      Container(
-                                        margin: EdgeInsets.only(),
-                                        child: Icon(
-                                          Icons.inventory_2,
-                                          color: NutribreadsColors.azulMedio,
-                                          size: 20,
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                          left: larguraTela / 10,
-                                        ),
-                                        child: Text(
-                                          'Farinha de trigo Herança Holandeza',
-                                          style: TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.grey.shade800,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
- */

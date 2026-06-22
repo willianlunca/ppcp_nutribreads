@@ -23,23 +23,39 @@ class _LoginState extends State<Login> {
   final session = Supabase.instance.client.auth.currentSession;
   @override
   Widget build(BuildContext context) {
+    double largura = MediaQuery.of(context).size.width;
+
+    int colunas = largura >= 1200
+        ? 5
+        : largura >= 900
+        ? 4
+        : largura >= 600
+        ? 3
+        : largura >= 400
+        ? 2
+        : 1;
+
+    double larguraTela = (largura / colunas) - 40;
+    double alturaTela = larguraTela * 0.9;
+    double tamanhoTexto = larguraTela * 0.10;
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
+            Container(
+              margin: EdgeInsets.only(top: 10),
               child: Image.asset(
                 'assets/logo/Nutrib_v2.png',
-                width: 200,
-                height: 200,
+                width: larguraTela,
+                height: alturaTela,
               ),
             ),
             Container(
               padding: EdgeInsets.all(16),
               width: MediaQuery.of(context).size.width * 0.90,
-              height: 400,
+              height: 320,
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(color: Colors.grey.shade300, width: 2.0),

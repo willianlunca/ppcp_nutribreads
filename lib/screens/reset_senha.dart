@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ppcp_nutribreads/colors/colors.dart';
 import 'package:ppcp_nutribreads/screens/login.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:lottie/lottie.dart';
 
 class ResetSenha extends StatefulWidget {
   const ResetSenha({super.key});
@@ -89,7 +90,7 @@ class _ResetSenhaState extends State<ResetSenha> {
 
             Container(
               padding: const EdgeInsets.all(16),
-              width: larguraTela * 2,
+              width: MediaQuery.of(context).size.width * 0.90,
               height: 300,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -133,7 +134,33 @@ class _ResetSenhaState extends State<ResetSenha> {
                     width: double.infinity,
                     height: 64,
                     child: ElevatedButton(
-                      onPressed: recuperarSenha,
+                      onPressed: () async {
+                        showGeneralDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          barrierColor: Colors.white,
+                          pageBuilder: (_, __, ___) {
+                            return Scaffold(
+                              backgroundColor: Colors.white,
+                              body: Center(
+                                child: Lottie.asset(
+                                  'assets/animations/animacao_azul_escuro.json',
+                                  width: 100,
+                                  height: 100,
+                                ),
+                              ),
+                            );
+                          },
+                        );
+
+                        try {
+                          await recuperarSenha();
+                        } finally {
+                          if (mounted) {
+                            Navigator.of(context, rootNavigator: true).pop();
+                          }
+                        }
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: NutribreadsColors.azulEscuro,
                         shape: RoundedRectangleBorder(
@@ -163,6 +190,7 @@ class _ResetSenhaState extends State<ResetSenha> {
                     alignment: Alignment.centerLeft,
                     child: InkWell(
                       onTap: () {
+                        print('pressionado botao entrar');
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(builder: (_) => const Login()),

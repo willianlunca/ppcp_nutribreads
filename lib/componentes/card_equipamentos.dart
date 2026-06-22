@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ppcp_nutribreads/colors/colors.dart';
+import 'package:ppcp_nutribreads/componentes/equipamentos_ajuste.dart';
+import 'package:ppcp_nutribreads/functions/mqtt_subscribe.dart';
+import 'dart:async';
 
-class CardEquipamentos extends StatelessWidget {
+class CardEquipamentos extends StatefulWidget {
   final bool status;
   final double width;
   final double height;
@@ -24,24 +27,129 @@ class CardEquipamentos extends StatelessWidget {
   });
 
   @override
+  State<CardEquipamentos> createState() => _CardEquipamentosState();
+}
+
+@override
+class _CardEquipamentosState extends State<CardEquipamentos> {
+  Timer? timerStatus;
+  String temperaturaRecebida = '---';
+  String umidadeRecebida = '---';
+  String dataHora = '---';
+
+  @override
+  void initState() {
+    super.initState();
+
+    timerStatus = Timer.periodic(const Duration(seconds: 1), (_) {
+      if (!mounted) return;
+      setState(() {});
+    });
+
+    iniciarMqtt();
+  }
+
+  Future<void> iniciarMqtt() async {
+    await mqttSubscribe(
+      topico: 'BHDC-0001/temperatura',
+      usuario: 'willianlunca',
+      senha: 'senha@9090',
+      onMensagem: (retorno) {
+        if (!mounted) return;
+        setState(() {
+          temperaturaRecebida = retorno.toString();
+        });
+      },
+    );
+
+    await mqttSubscribe(
+      topico: 'BHDC-0001/umidade',
+      usuario: 'willianlunca',
+      senha: 'senha@9090',
+      onMensagem: (retorno) {
+        if (!mounted) return;
+        setState(() {
+          umidadeRecebida = retorno.toString();
+        });
+      },
+    );
+
+    await mqttSubscribe(
+      topico: 'BHDC-0001/data_hora',
+      usuario: 'willianlunca',
+      senha: 'senha@9090',
+      onMensagem: (retorno) {
+        if (!mounted) return;
+        setState(() {
+          dataHora = retorno.toString();
+        });
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    timerStatus?.cancel();
+    mqttDisconnect(); // se sua biblioteca possuir essa função
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    Color corStatus;
+
+    if (dataHora.trim().isEmpty || dataHora == '---') {
+      // Ainda não recebeu nenhuma informação do MQTT
+      corStatus = Colors.grey;
+    } else {
+      try {
+        final partes = dataHora.split(' ');
+        final data = partes[0].split('/');
+        final hora = partes[1].split(':');
+
+        final DateTime ultimaComunicacao = DateTime(
+          int.parse(data[2]),
+          int.parse(data[1]),
+          int.parse(data[0]),
+          int.parse(hora[0]),
+          int.parse(hora[1]),
+          int.parse(hora[2]),
+        );
+
+        final diferenca = DateTime.now().difference(ultimaComunicacao);
+
+        corStatus = diferenca.inSeconds > 10 ? Colors.red : Colors.green;
+      } catch (_) {
+        // Se o formato da data estiver inválido
+        corStatus = Colors.grey;
+      }
+    }
     return Column(
       children: [
-        /** Card de equipamentos */
         Material(
           child: Ink(
             child: InkWell(
               borderRadius: BorderRadius.circular(10),
-              onTap: status ? () => print('Equipamento selecionado') : null,
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  backgroundColor: Colors.white,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(25),
+                    ),
+                  ),
+                  builder: (_) =>
+                      EquipamentosAjuste(serialNumber: widget.serialNumber),
+                );
+              },
               child: Container(
-                width: width,
-                height: height,
+                width: widget.width,
+                height: widget.height * 1.1,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.grey.shade300, width: 1),
-
-                  //color: NutribreadsColors.azulMedio,
-                  //color: Colors.grey.shade200,
+                  border: Border.all(color: Colors.grey.shade500, width: 1),
                 ),
                 child: Column(
                   children: [
@@ -52,8 +160,8 @@ class CardEquipamentos extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            width: larguraCardIcone,
-                            height: heightCardIcone,
+                            width: widget.larguraCardIcone,
+                            height: widget.heightCardIcone,
                             decoration: BoxDecoration(
                               color: Colors.blue.shade100,
                               borderRadius: BorderRadius.circular(15),
@@ -65,16 +173,17 @@ class CardEquipamentos extends StatelessWidget {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.only(left: larguraCardIcone / 7),
-                            width: larguraCardIcone * 3.5,
+                            margin: EdgeInsets.only(
+                              left: widget.larguraCardIcone / 7,
+                            ),
+                            width: widget.larguraCardIcone * 3.5,
                             child: Column(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.start, // <-- ADICIONE ISSO
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
                                   children: [
                                     Text(
-                                      nome,
+                                      widget.nome,
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600,
@@ -85,12 +194,12 @@ class CardEquipamentos extends StatelessWidget {
                                 ),
                                 Container(
                                   padding: const EdgeInsets.only(left: 0),
-                                  width: larguraCardIcone * 3,
+                                  width: widget.larguraCardIcone * 3,
                                   child: Row(
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          'Serial: ${serialNumber}',
+                                          'Serial: ${widget.serialNumber}',
                                           style: TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w400,
@@ -103,12 +212,12 @@ class CardEquipamentos extends StatelessWidget {
                                 ),
                                 Container(
                                   padding: const EdgeInsets.only(left: 0),
-                                  width: larguraCardIcone * 3,
+                                  width: widget.larguraCardIcone * 3,
                                   child: Row(
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          'Ultima Atualizaão: ${horaUpdate}',
+                                          'Ultima Atualizaão: ${dataHora}',
                                           style: TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w400,
@@ -123,15 +232,14 @@ class CardEquipamentos extends StatelessWidget {
                             ),
                           ),
                           Container(
-                            width: larguraCardIcone / 2,
-                            height: heightCardIcone / 2,
+                            width: widget.larguraCardIcone / 2,
+                            height: widget.heightCardIcone / 2,
                             decoration: BoxDecoration(
-                              //color: Colors.green.shade100,
                               borderRadius: BorderRadius.circular(15),
                             ),
                             child: Icon(
                               Icons.circle,
-                              color: Colors.green,
+                              color: corStatus,
                               size: 12,
                             ),
                           ),
@@ -147,14 +255,13 @@ class CardEquipamentos extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            //padding: const EdgeInsets.all(10),
                             child: Row(
                               children: [
                                 Column(
                                   children: [
                                     Container(
                                       padding: const EdgeInsets.only(bottom: 5),
-                                      child: Text(
+                                      child: const Text(
                                         'Temperatura',
                                         style: TextStyle(
                                           fontSize: 14,
@@ -164,15 +271,17 @@ class CardEquipamentos extends StatelessWidget {
                                       ),
                                     ),
                                     Container(
-                                      width: width * 0.6 / 2,
-                                      height: height * 0.3,
+                                      width: widget.width * 0.6 / 2,
+                                      height: widget.height * 0.3,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
                                         color: Colors.grey.shade300,
                                       ),
                                       child: Center(
                                         child: Text(
-                                          '25°C',
+                                          temperaturaRecebida == '---'
+                                              ? temperaturaRecebida
+                                              : '${temperaturaRecebida}°C',
                                           style: TextStyle(
                                             fontSize: 24,
                                             color: Colors.grey.shade800,
@@ -186,12 +295,11 @@ class CardEquipamentos extends StatelessWidget {
                               ],
                             ),
                           ),
-
                           Column(
                             children: [
                               Container(
                                 padding: const EdgeInsets.only(bottom: 5),
-                                child: Text(
+                                child: const Text(
                                   'Umididade',
                                   style: TextStyle(
                                     fontSize: 14,
@@ -201,15 +309,17 @@ class CardEquipamentos extends StatelessWidget {
                                 ),
                               ),
                               Container(
-                                width: width * 0.6 / 2,
-                                height: height * 0.3,
+                                width: widget.width * 0.6 / 2,
+                                height: widget.height * 0.3,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: Colors.grey.shade300,
                                 ),
                                 child: Center(
                                   child: Text(
-                                    '61%',
+                                    umidadeRecebida == '---'
+                                        ? umidadeRecebida
+                                        : '${umidadeRecebida}%',
                                     style: TextStyle(
                                       fontSize: 24,
                                       color: Colors.grey.shade800,
@@ -229,14 +339,12 @@ class CardEquipamentos extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Container(
-                            width: width * 0.80,
-                            height: height * 0.23,
-
-                            //margin: EdgeInsets.only(left: 20),
+                            width: widget.width * 0.80,
+                            height: widget.height * 0.23,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               border: Border.all(
-                                color: Colors.grey.shade300,
+                                color: Colors.grey.shade500,
                                 width: 1.0,
                               ),
                             ),
@@ -250,34 +358,27 @@ class CardEquipamentos extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Container(
-                                        child: Text(
-                                          'Ver Parâmetros',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.grey.shade800,
-                                          ),
+                                      Text(
+                                        'Ver Parâmetros',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.grey.shade800,
                                         ),
                                       ),
-
-                                      Container(
-                                        child: Text(
-                                          'Pressione para abrir controle',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.grey.shade800,
-                                          ),
+                                      Text(
+                                        'Pressione para abrir controle',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.grey.shade800,
                                         ),
                                       ),
                                     ],
                                   ),
-                                  Container(
-                                    child: Icon(
-                                      Icons.arrow_forward_ios,
-                                      color: Colors.grey.shade600,
-                                    ),
+                                  Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: Colors.grey.shade600,
                                   ),
                                 ],
                               ),
