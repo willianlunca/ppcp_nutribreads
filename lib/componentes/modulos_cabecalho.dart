@@ -167,7 +167,7 @@ class ModulosCabecalho extends StatelessWidget {
                     onTap: () async {
                       showDialog(
                         context: context,
-                        builder: (context) {
+                        builder: (dialogContext) {
                           return AlertDialog(
                             title: Text(
                               'Sair da Conta',
@@ -193,7 +193,7 @@ class ModulosCabecalho extends StatelessWidget {
                               ),
                               TextButton(
                                 onPressed: () async {
-                                  Navigator.pop(context); // fecha o dialog
+                                  Navigator.pop(context);
 
                                   await AuthService().signOut();
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ppcp_nutribreads/colors/colors.dart';
 
 class CardModulos extends StatefulWidget {
   final IconData icone;
@@ -54,7 +55,7 @@ class _ModulosCardModulosState extends State<CardModulos> {
               ? InkWell(
                   borderRadius: radius,
 
-                  onTap: widget.onTap,
+                  onTap: widget.permissao ? widget.onTap : null,
                   child: Ink(
                     width: larguraCard,
                     height: alturaCard,
@@ -112,7 +113,18 @@ class _ModulosCardModulosState extends State<CardModulos> {
               : InkWell(
                   borderRadius: radius,
 
-                  onTap: widget.onTap,
+                  onTap: widget.permissao
+                      ? widget.onTap
+                      : () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Você não tem permissão para acessar o modulo ${widget.titulo}',
+                              ),
+                              backgroundColor: NutribreadsColors.danger,
+                            ),
+                          );
+                        },
                   child: Ink(
                     width: larguraCard,
                     height: alturaCard,
@@ -155,7 +167,7 @@ class _ModulosCardModulosState extends State<CardModulos> {
                                       borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(6),
                                       ),
-                                      color: Colors.red.shade600,
+                                      color: NutribreadsColors.danger,
                                     ),
                                     child: const Icon(
                                       Icons.lock_outline,

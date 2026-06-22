@@ -1,29 +1,95 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ppcp_nutribreads/colors/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:ppcp_nutribreads/screens/login.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-class ResetSenha extends StatelessWidget {
+class ResetSenha extends StatefulWidget {
   const ResetSenha({super.key});
 
   @override
+  State<ResetSenha> createState() => _ResetSenhaState();
+}
+
+class _ResetSenhaState extends State<ResetSenha> {
+  late final TextEditingController emailController;
+
+  @override
+  void initState() {
+    super.initState();
+    emailController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    super.dispose();
+  }
+
+  Future<void> recuperarSenha() async {
+    final supa = Supabase.instance.client;
+
+    try {
+      await supa.auth.resetPasswordForEmail(
+        emailController.text.trim(),
+        redirectTo: 'https://billhard.com.br/recovery-pwd.html',
+      );
+
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Enviamos um e-mail para redefinir sua senha.'),
+        ),
+      );
+    } on AuthException catch (e) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Erro: ${e.message}')));
+    } finally {
+      if (!mounted) return;
+
+      Navigator.of(
+        context,
+      ).pushReplacement(MaterialPageRoute(builder: (_) => const Login()));
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    double largura = MediaQuery.of(context).size.width;
+
+    int colunas = largura >= 1200
+        ? 5
+        : largura >= 900
+        ? 4
+        : largura >= 600
+        ? 3
+        : largura >= 400
+        ? 2
+        : 1;
+
+    double larguraTela = (largura / colunas) - 40;
+    double alturaTela = larguraTela * 0.9;
+    double tamanhoTexto = larguraTela * 0.10;
+
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              child: Image.asset(
-                'assets/logo/Nutrib_v2.png',
-                width: 200,
-                height: 200,
-              ),
+            Image.asset(
+              'assets/logo/Nutrib_v2.png',
+              width: larguraTela,
+              height: alturaTela,
             ),
+
             Container(
-              padding: EdgeInsets.all(16),
-              width: MediaQuery.of(context).size.width * 0.60,
+              padding: const EdgeInsets.all(16),
+              width: larguraTela * 2,
               height: 300,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -32,29 +98,25 @@ class ResetSenha extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 25),
-                        child: Text(
-                          'E-mail para recuperação de senha',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
                   Container(
-                    margin: EdgeInsets.only(top: 8),
+                    alignment: Alignment.centerLeft,
+                    margin: const EdgeInsets.only(top: 25),
+                    child: Text(
+                      'E-mail para recuperação de senha',
+                      style: TextStyle(
+                        fontSize: tamanhoTexto * 0.7,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+
+                  Container(
+                    margin: const EdgeInsets.only(top: 8),
                     child: TextField(
+                      controller: emailController,
                       selectionControls: CupertinoTextSelectionControls(),
                       keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
                           vertical: 20,
                           horizontal: 12,
@@ -65,30 +127,21 @@ class ResetSenha extends StatelessWidget {
                       ),
                     ),
                   ),
+
                   Container(
-                    margin: EdgeInsets.only(top: 16),
-                    width: double.infinity, // ocupa toda a largura
+                    margin: const EdgeInsets.only(top: 16),
+                    width: double.infinity,
                     height: 64,
                     child: ElevatedButton(
-                      onPressed: () {
-                        FocusScope.of(context).unfocus(); // 🔑 fecha o teclado
-                        // ação do login
-                      },
+                      onPressed: recuperarSenha,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: NutribreadsColors.azulEscuro,
-                        
-                        
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
-                          
-                          
                         ),
-                        
                       ),
-                      
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Icon(Icons.lock_reset, size: 20, color: Colors.white),
                           SizedBox(width: 8),
@@ -106,31 +159,23 @@ class ResetSenha extends StatelessWidget {
                   ),
 
                   Container(
-                    margin: EdgeInsets.only(top: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            print('esqueci minha senha clicado');
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const Login(),
-                              ),
-                            );
-                          },
-                          child: Text(
-                            'Voltar a tela de login?',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w300,
-                              color: NutribreadsColors.azulEscuro,
-                            ),
-                          ),
+                    margin: const EdgeInsets.only(top: 16),
+                    alignment: Alignment.centerLeft,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (_) => const Login()),
+                        );
+                      },
+                      child: Text(
+                        'Voltar a tela de login?',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w300,
+                          color: NutribreadsColors.azulEscuro,
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ],

@@ -5,6 +5,8 @@ import 'dart:ui';
 import 'package:ppcp_nutribreads/componentes/modulos_cabecalho.dart';
 import 'package:ppcp_nutribreads/componentes/modulos_card_modulos.dart';
 import 'package:ppcp_nutribreads/componentes/ppcp_card_lista_colaboradores.dart';
+import 'package:ppcp_nutribreads/screens/equipamentos.dart';
+import 'package:ppcp_nutribreads/screens/manufatura.dart';
 import 'package:ppcp_nutribreads/screens/screenLoad.dart';
 import 'package:ppcp_nutribreads/services/api.dart';
 import 'package:lottie/lottie.dart';
@@ -132,6 +134,16 @@ class _ModulosState extends State<Modulos> {
                               titulo: 'Manufatura',
                               permissao: permissoes[0]['manufatura'],
                               descricao: 'Ingredientes e Receitas',
+                              onTap: () {
+                                load(context);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    //builder: (context) => const Colaboradores(),
+                                    builder: (context) => const Manufatura(),
+                                  ),
+                                );
+                              },
                             ),
                             CardModulos(
                               icone: Icons.shopping_cart,
@@ -172,6 +184,16 @@ class _ModulosState extends State<Modulos> {
                               titulo: 'Equipamentos',
                               permissao: permissoes[0]['equipamentos'],
                               descricao: 'Controle da Equipamentos',
+                              onTap: () {
+                                load(context);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    //builder: (context) => const Colaboradores(),
+                                    builder: (context) => const Equipamentos(),
+                                  ),
+                                );
+                              },
                             ),
                           ],
                         ),
