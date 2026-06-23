@@ -14,6 +14,9 @@ class Equipamentos extends StatefulWidget {
 }
 
 class _EquipamentosState extends State<Equipamentos> {
+  final GlobalKey<CardEquipamentosState> cardKey =
+      GlobalKey<CardEquipamentosState>();
+
   @override
   Widget build(BuildContext context) {
     double alturaListViewRetorno = 30;
@@ -153,16 +156,22 @@ class _EquipamentosState extends State<Equipamentos> {
             ),
             Expanded(
               child: RefreshIndicator(
+                color: Colors.black, // cor da “bolinha”/ícone que gira
+                backgroundColor:
+                    BillhardColors.verdeSecundario, // cor do círculo de fundo
+                strokeWidth: 2.5,
                 child: Container(
                   //color: Colors.amber.shade50,
                   width: MediaQuery.of(context).size.width * 0.9,
                   //margin: EdgeInsets.only(top: alturaTela / 5),
                   child: ListView(
+                    physics: const AlwaysScrollableScrollPhysics(),
                     padding: EdgeInsets.zero,
                     children: [
                       Container(
                         //margin: EdgeInsets.only(top: alturaTela / 10),
                         child: CardEquipamentos(
+                          key: cardKey,
                           status: true,
                           width: largura,
                           height: alturaTela * 2.1,
@@ -176,7 +185,9 @@ class _EquipamentosState extends State<Equipamentos> {
                     ],
                   ),
                 ),
-                onRefresh: () async {},
+                onRefresh: () async {
+                  await cardKey.currentState?.iniciarMqtt();
+                },
               ),
             ),
             Container(

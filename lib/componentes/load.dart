@@ -74,7 +74,7 @@ void load(BuildContext context) {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Lottie.asset(
-                      'assets/animations/animacao_azul_escuro.json',
+                      'assets/animations/animacao_verde_escuro.json',
                       width: 100,
                       height: 100,
                     ),
@@ -114,7 +114,7 @@ class Load extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Lottie.asset(
-                    'assets/animations/animacao_azul_escuro.json',
+                    'assets/animations/animacao_verde_escuro.json',
                     width: 100,
                     height: 100,
                   ),

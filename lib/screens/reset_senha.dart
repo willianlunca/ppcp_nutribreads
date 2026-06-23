@@ -143,7 +143,7 @@ class _ResetSenhaState extends State<ResetSenha> {
                               backgroundColor: Colors.white,
                               body: Center(
                                 child: Lottie.asset(
-                                  'assets/animations/animacao_azul_escuro.json',
+                                  'assets/animations/animacao_verde_escuro.json',
                                   width: 100,
                                   height: 100,
                                 ),

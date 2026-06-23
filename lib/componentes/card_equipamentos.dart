@@ -13,6 +13,7 @@ class CardEquipamentos extends StatefulWidget {
   final double heightCardIcone;
   final String serialNumber;
   final String horaUpdate;
+  final VoidCallback? onTap;
 
   const CardEquipamentos({
     super.key,
@@ -24,14 +25,15 @@ class CardEquipamentos extends StatefulWidget {
     required this.heightCardIcone,
     required this.serialNumber,
     required this.horaUpdate,
+    this.onTap,
   });
 
   @override
-  State<CardEquipamentos> createState() => _CardEquipamentosState();
+  State<CardEquipamentos> createState() => CardEquipamentosState();
 }
 
 @override
-class _CardEquipamentosState extends State<CardEquipamentos> {
+class CardEquipamentosState extends State<CardEquipamentos> {
   Timer? timerStatus;
   String temperaturaRecebida = '---';
   String umidadeRecebida = '---';
@@ -165,13 +167,13 @@ class _CardEquipamentosState extends State<CardEquipamentos> {
                             width: widget.larguraCardIcone,
                             height: widget.heightCardIcone,
                             decoration: BoxDecoration(
-                              color: Colors.blue.shade100,
+                              color: BillhardColors.verdeSecundario,
                               borderRadius: BorderRadius.circular(15),
                             ),
                             child: Icon(
                               Icons.bakery_dining,
                               size: 40,
-                              color: NutribreadsColors.azulMedio,
+                              color: BillhardColors.verdePrincipal,
                             ),
                           ),
                           Container(
@@ -273,11 +275,14 @@ class _CardEquipamentosState extends State<CardEquipamentos> {
                                       ),
                                     ),
                                     Container(
-                                      width: widget.width * 0.6 / 2,
+                                      width: widget.width * 0.6 / 1.55,
                                       height: widget.height * 0.3,
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.grey.shade300,
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(10),
+                                          bottomLeft: Radius.circular(10),
+                                        ),
+                                        color: BillhardColors.terraCota,
                                       ),
                                       child: Center(
                                         child: Text(
@@ -286,7 +291,7 @@ class _CardEquipamentosState extends State<CardEquipamentos> {
                                               : '${temperaturaRecebida}°C',
                                           style: TextStyle(
                                             fontSize: 24,
-                                            color: Colors.grey.shade800,
+                                            color: Colors.white,
                                             fontWeight: FontWeight.w800,
                                           ),
                                         ),
@@ -311,11 +316,14 @@ class _CardEquipamentosState extends State<CardEquipamentos> {
                                 ),
                               ),
                               Container(
-                                width: widget.width * 0.6 / 2,
+                                width: widget.width * 0.6 / 1.55,
                                 height: widget.height * 0.3,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.grey.shade300,
+                                  borderRadius: const BorderRadius.only(
+                                    topRight: Radius.circular(10),
+                                    bottomRight: Radius.circular(10),
+                                  ),
+                                  color: BillhardColors.bege,
                                 ),
                                 child: Center(
                                   child: Text(
@@ -324,7 +332,7 @@ class _CardEquipamentosState extends State<CardEquipamentos> {
                                         : '${umidadeRecebida}%',
                                     style: TextStyle(
                                       fontSize: 24,
-                                      color: Colors.grey.shade800,
+                                      color: BillhardColors.terraCota,
                                       fontWeight: FontWeight.w800,
                                     ),
                                   ),

@@ -162,7 +162,7 @@ class _LoginState extends State<Login> {
                                       borderRadius: BorderRadius.circular(16),
                                     ),
                                     child: Lottie.asset(
-                                      'assets/animations/animacao_azul_escuro.json',
+                                      'assets/animations/animacao_verde_escuro.json',
                                       width: 100,
                                       height: 100,
                                     ),

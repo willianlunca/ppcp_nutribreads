@@ -63,7 +63,7 @@ class ModulosCabecalho extends StatelessWidget {
                               height: alturaCard / 5,
                               margin: const EdgeInsets.only(left: 10),
                               decoration: BoxDecoration(
-                                color: NutribreadsColors.azulEscuro,
+                                color: BillhardColors.verdePrincipal,
                                 borderRadius: BorderRadius.circular(100),
                               ),
                               child: Center(
