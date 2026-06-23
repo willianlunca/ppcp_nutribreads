@@ -39,17 +39,19 @@ class _LoginState extends State<Login> {
     double alturaTela = larguraTela * 0.9;
     double tamanhoTexto = larguraTela * 0.10;
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: BillhardColors.verdePrincipal,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
+              height: 120,
               margin: EdgeInsets.only(top: 10),
               child: Image.asset(
-                'assets/logo/Nutrib_v2.png',
-                width: larguraTela,
-                height: alturaTela,
+                'assets/logo/billhard-versao-3.png',
+                width: larguraTela * 1.7,
+
+                //height: alturaTela,
               ),
             ),
             Container(
@@ -187,7 +189,7 @@ class _LoginState extends State<Login> {
                       },
 
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: NutribreadsColors.azulEscuro,
+                        backgroundColor: BillhardColors.terraCota,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -232,7 +234,7 @@ class _LoginState extends State<Login> {
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w300,
-                              color: NutribreadsColors.azulEscuro,
+                              color: Colors.black,
                             ),
                           ),
                         ),

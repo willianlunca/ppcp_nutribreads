@@ -50,3 +50,13 @@ abstract final class NutribreadsColors {
   static const Color textOnDark = branco;
   static const Color textOnLight = preto;
 }
+
+abstract final class BillhardColors {
+  BillhardColors._();
+
+  static const Color verdePrincipal = Color(0xFF00331F);
+  static const Color verdeSecundario = Color(0xFFB2DBCD);
+  static const Color terraCota = Color(0xFFA94B2F);
+  static const Color bege = Color(0xFFE2DECC);
+  static const Color azulTermokip = Color(0xFFB7C9E5);
+}

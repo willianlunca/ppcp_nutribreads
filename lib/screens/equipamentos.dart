@@ -41,7 +41,7 @@ class _EquipamentosState extends State<Equipamentos> {
               width: MediaQuery.of(context).size.width,
               height: alturaTela * 1.1,
               decoration: BoxDecoration(
-                color: NutribreadsColors.azulEscuro,
+                color: BillhardColors.verdePrincipal,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(alturaTela / 8),
                   bottomRight: Radius.circular(alturaTela / 8),
@@ -152,28 +152,31 @@ class _EquipamentosState extends State<Equipamentos> {
               ),
             ),
             Expanded(
-              child: Container(
-                //color: Colors.amber.shade50,
-                width: MediaQuery.of(context).size.width * 0.9,
-                //margin: EdgeInsets.only(top: alturaTela / 5),
-                child: ListView(
-                  padding: EdgeInsets.zero,
-                  children: [
-                    Container(
-                      //margin: EdgeInsets.only(top: alturaTela / 10),
-                      child: CardEquipamentos(
-                        status: true,
-                        width: largura,
-                        height: alturaTela * 2.1,
-                        nome: 'Câmara de fermentação',
-                        larguraCardIcone: largura * 0.15,
-                        heightCardIcone: alturaTela * 0.4,
-                        serialNumber: 'BHDC-0001',
-                        horaUpdate: '08:35:33',
+              child: RefreshIndicator(
+                child: Container(
+                  //color: Colors.amber.shade50,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  //margin: EdgeInsets.only(top: alturaTela / 5),
+                  child: ListView(
+                    padding: EdgeInsets.zero,
+                    children: [
+                      Container(
+                        //margin: EdgeInsets.only(top: alturaTela / 10),
+                        child: CardEquipamentos(
+                          status: true,
+                          width: largura,
+                          height: alturaTela * 2.1,
+                          nome: 'Câmara de fermentação',
+                          larguraCardIcone: largura * 0.15,
+                          heightCardIcone: alturaTela * 0.4,
+                          serialNumber: 'BHDC-0001',
+                          horaUpdate: '08:35:33',
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
+                onRefresh: () async {},
               ),
             ),
             Container(

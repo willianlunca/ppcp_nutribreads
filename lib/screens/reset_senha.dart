@@ -77,21 +77,20 @@ class _ResetSenhaState extends State<ResetSenha> {
     double tamanhoTexto = larguraTela * 0.10;
 
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: BillhardColors.verdePrincipal,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/logo/Nutrib_v2.png',
-              width: larguraTela,
-              height: alturaTela,
+              'assets/logo/billhard-versao-3.png',
+              width: larguraTela * 2,
             ),
 
             Container(
               padding: const EdgeInsets.all(16),
               width: MediaQuery.of(context).size.width * 0.90,
-              height: 300,
+              height: alturaTela * 1.8,
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(color: Colors.grey.shade300, width: 2.0),
@@ -119,8 +118,8 @@ class _ResetSenhaState extends State<ResetSenha> {
                       keyboardType: TextInputType.emailAddress,
                       decoration: const InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
-                          vertical: 20,
-                          horizontal: 12,
+                          vertical: 15,
+                          horizontal: 10,
                         ),
                         labelText: 'E-mail',
                         hintText: 'Digite seu e-mail',
@@ -131,8 +130,8 @@ class _ResetSenhaState extends State<ResetSenha> {
 
                   Container(
                     margin: const EdgeInsets.only(top: 16),
-                    width: double.infinity,
-                    height: 64,
+                    width: double.infinity, // ocupa toda a largura
+                    height: 55,
                     child: ElevatedButton(
                       onPressed: () async {
                         showGeneralDialog(
@@ -162,7 +161,8 @@ class _ResetSenhaState extends State<ResetSenha> {
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: NutribreadsColors.azulEscuro,
+                        backgroundColor: BillhardColors.terraCota,
+
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -201,7 +201,7 @@ class _ResetSenhaState extends State<ResetSenha> {
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w300,
-                          color: NutribreadsColors.azulEscuro,
+                          color: Colors.black,
                         ),
                       ),
                     ),

@@ -118,7 +118,9 @@ class _CardEquipamentosState extends State<CardEquipamentos> {
 
         final diferenca = DateTime.now().difference(ultimaComunicacao);
 
-        corStatus = diferenca.inSeconds > 10 ? Colors.red : Colors.green;
+        corStatus = diferenca.inSeconds > 10
+            ? Colors.red
+            : BillhardColors.verdeSecundario;
       } catch (_) {
         // Se o formato da data estiver inválido
         corStatus = Colors.grey;
