@@ -30,7 +30,7 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
 
   void iniciarMqtt() async {
     await mqttSubscribe(
-      topico: '${widget.serialNumber}/estado/equipamento',
+      topico: '${widget.serialNumber}/resposta/estado/equipamento',
       usuario: 'willianlunca',
       senha: 'senha@9090',
       onMensagem: (retorno) {
@@ -44,7 +44,7 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
       },
     );
     await mqttSubscribe(
-      topico: '${widget.serialNumber}/estado/iluminacao',
+      topico: '${widget.serialNumber}/resposta/estado/iluminacao',
       usuario: 'willianlunca',
       senha: 'senha@9090',
       onMensagem: (retorno) {
@@ -58,7 +58,7 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
       },
     );
     await mqttSubscribe(
-      topico: '${widget.serialNumber}/estado/ventilacao',
+      topico: '${widget.serialNumber}/resposta/estado/ventilacao',
       usuario: 'willianlunca',
       senha: 'senha@9090',
       onMensagem: (retorno) {
@@ -69,6 +69,87 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
         });
 
         print('Estado da ventilação  do equipamento: $ventilacao');
+      },
+    );
+
+    await mqttSubscribe(
+      topico: '${widget.serialNumber}/resposta/set/temperatura',
+      usuario: 'willianlunca',
+      senha: 'senha@9090',
+      onMensagem: (retorno) {
+        if (!mounted) return;
+
+        final int? valor = int.tryParse(retorno.toString());
+
+        if (valor != null) {
+          setState(() {
+            setTemperatura.value = valor;
+          });
+
+          print('Temperatura recebida: ${setTemperatura.value}');
+        } else {
+          print('Erro ao converter temperatura: $retorno');
+        }
+      },
+    );
+    await mqttSubscribe(
+      topico: '${widget.serialNumber}/resposta/set/umidade',
+      usuario: 'willianlunca',
+      senha: 'senha@9090',
+      onMensagem: (retorno) {
+        if (!mounted) return;
+
+        final int? valor = int.tryParse(retorno.toString());
+
+        if (valor != null) {
+          setState(() {
+            setUmidade.value = valor;
+          });
+
+          print('Umidade recebida: ${setUmidade.value}');
+        } else {
+          print('Erro ao converter Umidade: $retorno');
+        }
+      },
+    );
+    await mqttSubscribe(
+      topico: '${widget.serialNumber}/resposta/set/vapor_ativado',
+      usuario: 'willianlunca',
+      senha: 'senha@9090',
+      onMensagem: (retorno) {
+        if (!mounted) return;
+
+        final int? valor = int.tryParse(retorno.toString());
+
+        if (valor != null) {
+          setState(() {
+            setTempVaporAtivo.value = valor;
+          });
+
+          print('Vapor Ativado recebido: ${setTempVaporAtivo.value}');
+        } else {
+          print('Erro ao converter Vapor Ativado: $retorno');
+        }
+      },
+    );
+
+    await mqttSubscribe(
+      topico: '${widget.serialNumber}/resposta/set/vapor_desativado',
+      usuario: 'willianlunca',
+      senha: 'senha@9090',
+      onMensagem: (retorno) {
+        if (!mounted) return;
+
+        final int? valor = int.tryParse(retorno.toString());
+
+        if (valor != null) {
+          setState(() {
+            setTempVaporDesat.value = valor;
+          });
+          print('Vapor desativado: ${setTempVaporDesat.value}');
+        } else {
+          print('Erro ao converter Vapor desativado $retorno');
+        }
       },
     );
   }
@@ -215,7 +296,7 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                                             }
                                             await mqttPublish(
                                               topico:
-                                                  '${widget.serialNumber}/funcao/temperatura',
+                                                  '${widget.serialNumber}/comando/temperatura',
                                               mensagem:
                                                   '${setTemperatura.value}',
                                               usuario: 'willianlunca',
@@ -286,7 +367,7 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                                             }
                                             await mqttPublish(
                                               topico:
-                                                  '${widget.serialNumber}/funcao/temperatura',
+                                                  '${widget.serialNumber}/comando/temperatura',
                                               mensagem:
                                                   '${setTemperatura.value}',
                                               usuario: 'willianlunca',
@@ -402,7 +483,7 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                                             }
                                             await mqttPublish(
                                               topico:
-                                                  '${widget.serialNumber}/funcao/umidade',
+                                                  '${widget.serialNumber}/comando/umidade',
                                               mensagem: '${setUmidade.value}',
                                               usuario: 'willianlunca',
                                               senha: 'senha@9090',
@@ -468,7 +549,7 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                                             }
                                             await mqttPublish(
                                               topico:
-                                                  '${widget.serialNumber}/funcao/umidade',
+                                                  '${widget.serialNumber}/comando/umidade',
                                               mensagem: '${setUmidade.value}',
                                               usuario: 'willianlunca',
                                               senha: 'senha@9090',
@@ -583,7 +664,7 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                                             }
                                             await mqttPublish(
                                               topico:
-                                                  '${widget.serialNumber}/funcao/vapor_ativado',
+                                                  '${widget.serialNumber}/comando/vapor_ativado',
                                               mensagem:
                                                   '${setTempVaporAtivo.value}',
                                               usuario: 'willianlunca',
@@ -650,7 +731,7 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                                             }
                                             await mqttPublish(
                                               topico:
-                                                  '${widget.serialNumber}/funcao/vapor_ativado',
+                                                  '${widget.serialNumber}/comando/vapor_ativado',
                                               mensagem:
                                                   '${setTempVaporAtivo.value}',
                                               usuario: 'willianlunca',
@@ -765,7 +846,7 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                                             }
                                             await mqttPublish(
                                               topico:
-                                                  '${widget.serialNumber}/funcao/vapor_desativado',
+                                                  '${widget.serialNumber}/comando/vapor_desativado',
                                               mensagem:
                                                   '${setTempVaporDesat.value}',
                                               usuario: 'willianlunca',
@@ -836,7 +917,7 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                                             }
                                             await mqttPublish(
                                               topico:
-                                                  '${widget.serialNumber}/funcao/vapor_desativado',
+                                                  '${widget.serialNumber}/comando/vapor_desativado',
                                               mensagem:
                                                   '${setTempVaporDesat.value}',
                                               usuario: 'willianlunca',
@@ -952,7 +1033,7 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                               onChanged: (valor) async {
                                 await mqttPublish(
                                   topico:
-                                      '${widget.serialNumber}/estado/equipamento',
+                                      '${widget.serialNumber}/comando/estado/equipamento',
                                   mensagem: '${valor}',
                                   usuario: 'willianlunca',
                                   senha: 'senha@9090',
@@ -964,7 +1045,7 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                                   },
                                 );
                                 setState(() {
-                                  ventilacao = valor;
+                                  status = valor;
                                 });
                               },
                             ),
@@ -1032,7 +1113,7 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                               onChanged: (valor) async {
                                 await mqttPublish(
                                   topico:
-                                      '${widget.serialNumber}/estado/iluminacao',
+                                      '${widget.serialNumber}/comando/estado/iluminacao',
                                   mensagem: '${valor}',
                                   usuario: 'willianlunca',
                                   senha: 'senha@9090',
@@ -1044,7 +1125,7 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                                   },
                                 );
                                 setState(() {
-                                  ventilacao = valor;
+                                  iluminacao = valor;
                                 });
                               },
                             ),
@@ -1110,7 +1191,7 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                               onChanged: (valor) async {
                                 await mqttPublish(
                                   topico:
-                                      '${widget.serialNumber}/estado/ventilacao',
+                                      '${widget.serialNumber}/comando/estado/ventilacao',
                                   mensagem: '${valor}',
                                   usuario: 'willianlunca',
                                   senha: 'senha@9090',
