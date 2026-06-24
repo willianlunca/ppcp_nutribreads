@@ -3,8 +3,7 @@ import 'package:lottie/lottie.dart';
 import 'package:ppcp_nutribreads/colors/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ppcp_nutribreads/screens/modulos.dart';
-import 'package:ppcp_nutribreads/screens/ppcp_colaboradores.dart';
-import 'package:ppcp_nutribreads/screens/ppcp_lista_ordens.dart';
+import 'package:ppcp_nutribreads/screens/nova_conta.dart';
 import 'package:ppcp_nutribreads/screens/reset_senha.dart';
 import 'package:ppcp_nutribreads/services/auth.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -57,7 +56,7 @@ class _LoginState extends State<Login> {
             Container(
               padding: EdgeInsets.all(16),
               width: MediaQuery.of(context).size.width * 0.90,
-              height: 320,
+              height: alturaTela * 2.3,
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(color: Colors.grey.shade300, width: 2.0),
@@ -215,7 +214,7 @@ class _LoginState extends State<Login> {
 
                   Container(
                     margin: EdgeInsets.only(top: 16),
-                    child: Row(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -238,10 +237,56 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Ainda não possui uma conta?',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w300,
+                                color: Colors.black,
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                print('esqueci minha senha clicado');
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => NovaConta(),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(left: 5),
+                                child: Text(
+                                  'Criar conta.',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w300,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
                 ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 10),
+              child: Text(
+                '© 2024 Billhard. Todos os direitos reservados.',
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                  color: BillhardColors.verdeSecundario,
+                ),
               ),
             ),
           ],

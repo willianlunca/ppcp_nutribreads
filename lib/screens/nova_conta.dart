@@ -5,56 +5,57 @@ import 'package:ppcp_nutribreads/screens/login.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:lottie/lottie.dart';
 
-class ResetSenha extends StatefulWidget {
-  const ResetSenha({super.key});
+class NovaConta extends StatefulWidget {
+  const NovaConta({super.key});
 
   @override
-  State<ResetSenha> createState() => _ResetSenhaState();
+  State<NovaConta> createState() => _NovaContaState();
 }
 
-class _ResetSenhaState extends State<ResetSenha> {
+class _NovaContaState extends State<NovaConta> {
   late final TextEditingController emailController;
+  late final TextEditingController senhaController;
 
   @override
   void initState() {
     super.initState();
     emailController = TextEditingController();
+    senhaController = TextEditingController();
   }
 
   @override
   void dispose() {
     emailController.dispose();
+    senhaController.dispose();
     super.dispose();
   }
 
-  Future<void> recuperarSenha() async {
+  Future<void> criarConta() async {
     final supa = Supabase.instance.client;
 
     try {
-      await supa.auth.resetPasswordForEmail(
-        emailController.text.trim(),
-        redirectTo: 'https://billhard.com.br/recovery-pwd.html',
+      await supa.auth.signUp(
+        email: emailController.text.trim(),
+        password: senhaController.text.trim(),
       );
 
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Enviamos um e-mail para redefinir sua senha.'),
+          content: Text('Conta criada com sucesso. Verifique seu e-mail.'),
         ),
       );
+
+      Navigator.of(
+        context,
+      ).pushReplacement(MaterialPageRoute(builder: (_) => const Login()));
     } on AuthException catch (e) {
       if (!mounted) return;
 
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text('Erro: ${e.message}')));
-    } finally {
-      if (!mounted) return;
-
-      Navigator.of(
-        context,
-      ).pushReplacement(MaterialPageRoute(builder: (_) => const Login()));
     }
   }
 
@@ -74,7 +75,6 @@ class _ResetSenhaState extends State<ResetSenha> {
 
     double larguraTela = (largura / colunas) - 40;
     double alturaTela = larguraTela * 0.9;
-    double tamanhoTexto = larguraTela * 0.10;
 
     return Scaffold(
       backgroundColor: BillhardColors.verdePrincipal,
@@ -90,7 +90,7 @@ class _ResetSenhaState extends State<ResetSenha> {
             Container(
               padding: const EdgeInsets.all(16),
               width: MediaQuery.of(context).size.width * 0.90,
-              height: alturaTela * 1.8,
+              height: alturaTela * 2.3,
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(color: Colors.grey.shade300, width: 2.0),
@@ -101,8 +101,8 @@ class _ResetSenhaState extends State<ResetSenha> {
                   Container(
                     alignment: Alignment.centerLeft,
                     margin: const EdgeInsets.only(top: 25),
-                    child: Text(
-                      'E-mail de recuperação',
+                    child: const Text(
+                      'Criar conta',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -129,8 +129,26 @@ class _ResetSenhaState extends State<ResetSenha> {
                   ),
 
                   Container(
+                    margin: const EdgeInsets.only(top: 12),
+                    child: TextField(
+                      controller: senhaController,
+                      obscureText: true,
+                      selectionControls: CupertinoTextSelectionControls(),
+                      decoration: const InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(
+                          vertical: 15,
+                          horizontal: 10,
+                        ),
+                        labelText: 'Senha',
+                        hintText: 'Digite sua senha',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+
+                  Container(
                     margin: const EdgeInsets.only(top: 16),
-                    width: double.infinity, // ocupa toda a largura
+                    width: double.infinity,
                     height: 55,
                     child: ElevatedButton(
                       onPressed: () async {
@@ -153,7 +171,7 @@ class _ResetSenhaState extends State<ResetSenha> {
                         );
 
                         try {
-                          await recuperarSenha();
+                          await criarConta();
                         } finally {
                           if (mounted) {
                             Navigator.of(context, rootNavigator: true).pop();
@@ -162,7 +180,6 @@ class _ResetSenhaState extends State<ResetSenha> {
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: BillhardColors.terraCota,
-
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -170,10 +187,10 @@ class _ResetSenhaState extends State<ResetSenha> {
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.lock_reset, size: 20, color: Colors.white),
+                          Icon(Icons.person_add, size: 20, color: Colors.white),
                           SizedBox(width: 8),
                           Text(
-                            'Recuperar Senha',
+                            'Criar Conta',
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
@@ -190,14 +207,13 @@ class _ResetSenhaState extends State<ResetSenha> {
                     alignment: Alignment.centerLeft,
                     child: InkWell(
                       onTap: () {
-                        print('pressionado botao entrar');
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(builder: (_) => const Login()),
                         );
                       },
-                      child: Text(
-                        'Volte para tela de login',
+                      child: const Text(
+                        'Voltar para tela de login',
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w300,
@@ -209,8 +225,9 @@ class _ResetSenhaState extends State<ResetSenha> {
                 ],
               ),
             ),
+
             Container(
-              margin: EdgeInsets.only(top: 10),
+              margin: const EdgeInsets.only(top: 10),
               child: Text(
                 '© 2024 Billhard. Todos os direitos reservados.',
                 style: TextStyle(

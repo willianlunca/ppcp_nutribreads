@@ -30,9 +30,18 @@ class _ModulosState extends State<Modulos> {
   Future<void> _carregarPermissoes() async {
     final dados = await PermissoesService().buscarPermissoes();
 
+    if (!mounted) return;
+
     setState(() {
       permissoes = List<Map<String, dynamic>>.from(dados);
-      comercial = permissoes[0]['comercial'];
+
+      if (permissoes.isNotEmpty) {
+        comercial = permissoes[0]['comercial'] == true;
+      } else {
+        comercial = false;
+      }
+
+      carregando = false;
     });
   }
 
@@ -68,7 +77,7 @@ class _ModulosState extends State<Modulos> {
     double alturaCard = larguraCard * 0.9; // mantém proporção
     //double tamanhoTexto = larguraCard * 0.10;
     //double tamanhoBox = larguraCard * 0.4;
-    if (permissoes.isEmpty) {
+    if (carregando) {
       return Scaffold(
         body: Center(
           child: Lottie.asset(
@@ -80,6 +89,21 @@ class _ModulosState extends State<Modulos> {
       );
       //return const LoadWidget();
       //return LoadWidget();
+    }
+    if (permissoes.isEmpty) {
+      return const Scaffold(
+        backgroundColor: BillhardColors.bege,
+        body: Center(
+          child: Text(
+            'Você não tem permissão para acessar esse aplicativo',
+            style: TextStyle(
+              color: BillhardColors.verdePrincipal,
+              fontWeight: FontWeight.w900,
+              fontSize: 12,
+            ),
+          ),
+        ),
+      );
     }
     return Scaffold(
       body: Column(
@@ -101,9 +125,19 @@ class _ModulosState extends State<Modulos> {
               backgroundColor: NutribreadsColors.azulEscuro,
               onRefresh: () async {
                 await Future.delayed(const Duration(seconds: 1));
-                permissoes = await PermissoesService().buscarPermissoes();
+
+                final dados = await PermissoesService().buscarPermissoes();
+
+                if (!mounted) return;
+
                 setState(() {
-                  comercial != comercial;
+                  permissoes = List<Map<String, dynamic>>.from(dados);
+
+                  if (permissoes.isNotEmpty) {
+                    comercial = permissoes[0]['comercial'] ?? false;
+                  } else {
+                    comercial = false;
+                  }
                 });
               },
               child: Center(
