@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:ppcp_nutribreads/colors/colors.dart';
 import 'package:ppcp_nutribreads/componentes/load.dart';
 import 'package:ppcp_nutribreads/functions/loop.dart';
 import 'package:ppcp_nutribreads/screens/screenLoad.dart';
@@ -47,11 +48,14 @@ class _AuthCheckState extends State<AuthCheck> {
   Widget build(BuildContext context) {
     if (destino == null) {
       return Scaffold(
-        body: Center(
-          child: Lottie.asset(
-            'assets/animations/animacao_verde_escuro.json',
-            width: 100,
-            height: 100,
+        body: Container(
+          color: BillhardColors.bege,
+          child: Center(
+            child: Lottie.asset(
+              'assets/animations/animacao_verde_escuro.json',
+              width: 100,
+              height: 100,
+            ),
           ),
         ),
       );

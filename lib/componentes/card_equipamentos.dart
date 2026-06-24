@@ -122,7 +122,7 @@ class CardEquipamentosState extends State<CardEquipamentos> {
 
         corStatus = diferenca.inSeconds > 10
             ? Colors.red
-            : BillhardColors.verdeSecundario;
+            : BillhardColors.verdePrincipal;
       } catch (_) {
         // Se o formato da data estiver inválido
         corStatus = Colors.grey;
@@ -131,6 +131,7 @@ class CardEquipamentosState extends State<CardEquipamentos> {
     return Column(
       children: [
         Material(
+          color: BillhardColors.bege,
           child: Ink(
             child: InkWell(
               borderRadius: BorderRadius.circular(10),
@@ -323,7 +324,7 @@ class CardEquipamentosState extends State<CardEquipamentos> {
                                     topRight: Radius.circular(10),
                                     bottomRight: Radius.circular(10),
                                   ),
-                                  color: BillhardColors.bege,
+                                  color: BillhardColors.verdeSecundario,
                                 ),
                                 child: Center(
                                   child: Text(

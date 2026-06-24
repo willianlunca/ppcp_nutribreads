@@ -80,10 +80,15 @@ class _ModulosState extends State<Modulos> {
     if (carregando) {
       return Scaffold(
         body: Center(
-          child: Lottie.asset(
-            'assets/animations/animacao_verde_escuro.json',
-            width: 100,
-            height: 100,
+          child: Container(
+            color: BillhardColors.bege,
+            child: Center(
+              child: Lottie.asset(
+                'assets/animations/animacao_verde_escuro.json',
+                width: 100,
+                height: 100,
+              ),
+            ),
           ),
         ),
       );
@@ -91,21 +96,52 @@ class _ModulosState extends State<Modulos> {
       //return LoadWidget();
     }
     if (permissoes.isEmpty) {
-      return const Scaffold(
+      return Scaffold(
         backgroundColor: BillhardColors.bege,
-        body: Center(
-          child: Text(
-            'Você não tem permissão para acessar esse aplicativo',
-            style: TextStyle(
-              color: BillhardColors.verdePrincipal,
-              fontWeight: FontWeight.w900,
-              fontSize: 12,
+        body: Column(
+          children: [
+            Container(
+              child: ModulosCabecalho(
+                iniciaisNome: 'WL',
+                nomeCompleto: 'Willian Lunca',
+                cargo: 'Diretor',
+                titulo: 'Selecione o Módulo',
+              ),
             ),
-          ),
+            Expanded(
+              child: Center(
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Não existe um perfil de permissões para seu usuário.',
+                        style: TextStyle(
+                          color: BillhardColors.verdePrincipal,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 12,
+                        ),
+                      ),
+                      Text(
+                        'Por favor contactar seu administrador.',
+                        style: TextStyle(
+                          color: BillhardColors.verdePrincipal,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       );
     }
     return Scaffold(
+      backgroundColor: BillhardColors.bege,
       body: Column(
         children: [
           Center(
@@ -121,8 +157,10 @@ class _ModulosState extends State<Modulos> {
 
           Expanded(
             child: RefreshIndicator(
-              color: Colors.white,
-              backgroundColor: NutribreadsColors.azulEscuro,
+              color: Colors.black, // cor da “bolinha”/ícone que gira
+              backgroundColor:
+                  BillhardColors.verdeSecundario, // cor do círculo de fundo
+              strokeWidth: 2.5,
               onRefresh: () async {
                 await Future.delayed(const Duration(seconds: 1));
 
@@ -190,7 +228,7 @@ class _ModulosState extends State<Modulos> {
                             CardModulos(
                               icone: Icons.local_shipping_outlined,
                               corIcone: Colors.grey.shade800,
-                              corBloco: Colors.grey.shade300,
+                              corBloco: Colors.grey.shade400,
                               titulo: 'Logistica',
                               permissao: permissoes[0]['logistica'],
                               descricao: 'Logistica e Distribuição',

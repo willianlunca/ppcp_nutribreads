@@ -62,7 +62,7 @@ class _ModulosCardModulosState extends State<CardModulos> {
                     decoration: BoxDecoration(
                       borderRadius: radius,
                       border: Border.all(
-                        color: Colors.grey.shade300,
+                        color: Colors.grey.shade500,
                         width: 2.0,
                       ),
                     ),
@@ -131,7 +131,7 @@ class _ModulosCardModulosState extends State<CardModulos> {
                     decoration: BoxDecoration(
                       borderRadius: radius,
                       border: Border.all(
-                        color: Colors.grey.shade300,
+                        color: Colors.grey.shade500,
                         width: 2.0,
                       ),
                     ),

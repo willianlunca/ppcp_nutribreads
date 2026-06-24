@@ -38,6 +38,7 @@ class ModulosCabecalho extends StatelessWidget {
     double tamanhoBox = larguraCard * 0.4;
     return SizedBox(
       child: Container(
+        decoration: BoxDecoration(color: BillhardColors.bege),
         width: MediaQuery.of(context).size.width * 0.85,
         constraints: BoxConstraints(minHeight: alturaCard / 1.2),
         margin: const EdgeInsets.only(top: 80),
@@ -50,7 +51,7 @@ class ModulosCabecalho extends StatelessWidget {
                   height: tamanhoBox / 1.2,
                   margin: const EdgeInsets.only(bottom: 0),
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
+                    color: BillhardColors.verdeSecundario,
                     borderRadius: BorderRadius.circular(40),
                   ),
                   child: Row(
@@ -161,6 +162,7 @@ class ModulosCabecalho extends StatelessWidget {
                   ),
                 ),
                 Material(
+                  color: BillhardColors.bege,
                   borderRadius: BorderRadius.circular(4),
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
@@ -169,6 +171,7 @@ class ModulosCabecalho extends StatelessWidget {
                         context: context,
                         builder: (dialogContext) {
                           return AlertDialog(
+                            backgroundColor: BillhardColors.bege,
                             title: Text(
                               'Sair da Conta',
                               style: TextStyle(
@@ -187,7 +190,7 @@ class ModulosCabecalho extends StatelessWidget {
                                 child: Text(
                                   'Cancelar',
                                   style: TextStyle(
-                                    color: NutribreadsColors.azulEscuro,
+                                    color: BillhardColors.verdePrincipal,
                                   ),
                                 ),
                               ),
@@ -227,11 +230,12 @@ class ModulosCabecalho extends StatelessWidget {
                     child: Ink(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
+                        color: BillhardColors.bege,
                       ),
                       child: Icon(
                         Icons.logout,
                         size: 23,
-                        color: Colors.grey.shade700,
+                        color: BillhardColors.verdePrincipal,
                       ),
                     ),
                   ),

@@ -160,10 +160,15 @@ class _NovaContaState extends State<NovaConta> {
                             return Scaffold(
                               backgroundColor: Colors.white,
                               body: Center(
-                                child: Lottie.asset(
-                                  'assets/animations/animacao_verde_escuro.json',
-                                  width: 100,
-                                  height: 100,
+                                child: Container(
+                                  color: BillhardColors.bege,
+                                  child: Center(
+                                    child: Lottie.asset(
+                                      'assets/animations/animacao_verde_escuro.json',
+                                      width: 100,
+                                      height: 100,
+                                    ),
+                                  ),
                                 ),
                               ),
                             );

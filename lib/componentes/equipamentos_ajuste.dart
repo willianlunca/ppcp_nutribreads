@@ -1,15 +1,77 @@
 import 'package:flutter/material.dart';
 import 'package:ppcp_nutribreads/colors/colors.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:ppcp_nutribreads/functions/mqtt_publish.dart';
+import 'package:ppcp_nutribreads/functions/mqtt_subscribe.dart';
 
-class EquipamentosAjuste extends StatelessWidget {
+class EquipamentosAjuste extends StatefulWidget {
   final String serialNumber;
 
-  EquipamentosAjuste({super.key, required this.serialNumber});
+  const EquipamentosAjuste({super.key, required this.serialNumber});
 
+  @override
+  State<EquipamentosAjuste> createState() => _EquipamentosAjusteState();
+}
+
+class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
   final ValueNotifier<int> setTemperatura = ValueNotifier<int>(25);
   final ValueNotifier<int> setUmidade = ValueNotifier<int>(15);
   final ValueNotifier<int> setTempVaporAtivo = ValueNotifier<int>(30);
   final ValueNotifier<int> setTempVaporDesat = ValueNotifier<int>(40);
+  bool status = false;
+  bool iluminacao = false;
+  bool ventilacao = false;
+  @override
+  void initState() {
+    super.initState();
+
+    iniciarMqtt();
+  }
+
+  void iniciarMqtt() async {
+    await mqttSubscribe(
+      topico: '${widget.serialNumber}/estado/equipamento',
+      usuario: 'willianlunca',
+      senha: 'senha@9090',
+      onMensagem: (retorno) {
+        if (!mounted) return;
+
+        setState(() {
+          status = retorno.toString().toLowerCase() == 'true';
+        });
+
+        print('Estado do equipamento: $status');
+      },
+    );
+    await mqttSubscribe(
+      topico: '${widget.serialNumber}/estado/iluminacao',
+      usuario: 'willianlunca',
+      senha: 'senha@9090',
+      onMensagem: (retorno) {
+        if (!mounted) return;
+
+        setState(() {
+          iluminacao = retorno.toString().toLowerCase() == 'true';
+        });
+
+        print('Estado da Iluminacao do equipamento: $iluminacao');
+      },
+    );
+    await mqttSubscribe(
+      topico: '${widget.serialNumber}/estado/ventilacao',
+      usuario: 'willianlunca',
+      senha: 'senha@9090',
+      onMensagem: (retorno) {
+        if (!mounted) return;
+
+        setState(() {
+          ventilacao = retorno.toString().toLowerCase() == 'true';
+        });
+
+        print('Estado da ventilação  do equipamento: $ventilacao');
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +91,7 @@ class EquipamentosAjuste extends StatelessWidget {
     double larguraTela = (largura / colunas) - 40;
     double alturaTela = larguraTela * 0.9;
     double tamanhoTexto = larguraTela * 0.10;
+
     return Container(
       decoration: const BoxDecoration(
         color: BillhardColors.bege,
@@ -74,7 +137,7 @@ class EquipamentosAjuste extends StatelessWidget {
                     Container(
                       margin: EdgeInsets.only(bottom: 10),
                       child: Text(
-                        'Serial: $serialNumber',
+                        'Serial: ${widget.serialNumber}',
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
@@ -146,10 +209,22 @@ class EquipamentosAjuste extends StatelessWidget {
                                       Material(
                                         color: Colors.transparent,
                                         child: InkWell(
-                                          onTap: () {
+                                          onTap: () async {
                                             if (setTemperatura.value > 0) {
                                               setTemperatura.value--;
                                             }
+                                            await mqttPublish(
+                                              topico:
+                                                  '${widget.serialNumber}/funcao/temperatura',
+                                              mensagem:
+                                                  '${setTemperatura.value}',
+                                              usuario: 'willianlunca',
+                                              senha: 'senha@9090',
+                                              onSucesso: () {},
+                                              onErro: (erro) {
+                                                print(erro);
+                                              },
+                                            );
                                             print('Diminuir temperatura');
                                           },
                                           borderRadius: BorderRadius.circular(
@@ -205,10 +280,22 @@ class EquipamentosAjuste extends StatelessWidget {
                                       Material(
                                         color: Colors.transparent,
                                         child: InkWell(
-                                          onTap: () {
+                                          onTap: () async {
                                             if (setTemperatura.value < 60) {
                                               setTemperatura.value++;
                                             }
+                                            await mqttPublish(
+                                              topico:
+                                                  '${widget.serialNumber}/funcao/temperatura',
+                                              mensagem:
+                                                  '${setTemperatura.value}',
+                                              usuario: 'willianlunca',
+                                              senha: 'senha@9090',
+                                              onSucesso: () {},
+                                              onErro: (erro) {
+                                                print(erro);
+                                              },
+                                            );
                                             print('Aumentar temperatura');
                                           },
                                           borderRadius: BorderRadius.circular(
@@ -309,10 +396,21 @@ class EquipamentosAjuste extends StatelessWidget {
                                       Material(
                                         color: Colors.transparent,
                                         child: InkWell(
-                                          onTap: () {
+                                          onTap: () async {
                                             if (setUmidade.value > 15) {
                                               setUmidade.value--;
                                             }
+                                            await mqttPublish(
+                                              topico:
+                                                  '${widget.serialNumber}/funcao/umidade',
+                                              mensagem: '${setUmidade.value}',
+                                              usuario: 'willianlunca',
+                                              senha: 'senha@9090',
+                                              onSucesso: () {},
+                                              onErro: (erro) {
+                                                print(erro);
+                                              },
+                                            );
                                             print('Diminuir Umidade');
                                           },
                                           borderRadius: BorderRadius.circular(
@@ -364,10 +462,21 @@ class EquipamentosAjuste extends StatelessWidget {
                                       Material(
                                         color: Colors.transparent,
                                         child: InkWell(
-                                          onTap: () {
+                                          onTap: () async {
                                             if (setUmidade.value < 95) {
                                               setUmidade.value++;
                                             }
+                                            await mqttPublish(
+                                              topico:
+                                                  '${widget.serialNumber}/funcao/umidade',
+                                              mensagem: '${setUmidade.value}',
+                                              usuario: 'willianlunca',
+                                              senha: 'senha@9090',
+                                              onSucesso: () {},
+                                              onErro: (erro) {
+                                                print(erro);
+                                              },
+                                            );
                                             print('Aumentar Umidade');
                                           },
                                           borderRadius: BorderRadius.circular(
@@ -468,11 +577,23 @@ class EquipamentosAjuste extends StatelessWidget {
                                       Material(
                                         color: Colors.transparent,
                                         child: InkWell(
-                                          onTap: () {
+                                          onTap: () async {
                                             if (setTempVaporAtivo.value > 10) {
                                               setTempVaporAtivo.value--;
                                             }
-                                            print('Diminuir Tempo Vapor');
+                                            await mqttPublish(
+                                              topico:
+                                                  '${widget.serialNumber}/funcao/vapor_ativado',
+                                              mensagem:
+                                                  '${setTempVaporAtivo.value}',
+                                              usuario: 'willianlunca',
+                                              senha: 'senha@9090',
+                                              onSucesso: () {},
+                                              onErro: (erro) {
+                                                print(erro);
+                                              },
+                                            );
+                                            print('Reduzir Tempo Vapor');
                                           },
                                           borderRadius: BorderRadius.circular(
                                             8,
@@ -523,11 +644,22 @@ class EquipamentosAjuste extends StatelessWidget {
                                       Material(
                                         color: Colors.transparent,
                                         child: InkWell(
-                                          onTap: () {
+                                          onTap: () async {
                                             if (setTempVaporAtivo.value < 180) {
                                               setTempVaporAtivo.value++;
                                             }
-                                            print('Aumentar Tempo Vapor');
+                                            await mqttPublish(
+                                              topico:
+                                                  '${widget.serialNumber}/funcao/vapor_ativado',
+                                              mensagem:
+                                                  '${setTempVaporAtivo.value}',
+                                              usuario: 'willianlunca',
+                                              senha: 'senha@9090',
+                                              onSucesso: () {},
+                                              onErro: (erro) {
+                                                print(erro);
+                                              },
+                                            );
                                           },
                                           borderRadius: BorderRadius.circular(
                                             8,
@@ -627,10 +759,22 @@ class EquipamentosAjuste extends StatelessWidget {
                                       Material(
                                         color: Colors.transparent,
                                         child: InkWell(
-                                          onTap: () {
+                                          onTap: () async {
                                             if (setTempVaporDesat.value > 40) {
                                               setTempVaporDesat.value--;
                                             }
+                                            await mqttPublish(
+                                              topico:
+                                                  '${widget.serialNumber}/funcao/vapor_desativado',
+                                              mensagem:
+                                                  '${setTempVaporDesat.value}',
+                                              usuario: 'willianlunca',
+                                              senha: 'senha@9090',
+                                              onSucesso: () {},
+                                              onErro: (erro) {
+                                                print(erro);
+                                              },
+                                            );
                                             print('Diminuir Vapor Desativado');
                                           },
                                           borderRadius: BorderRadius.circular(
@@ -686,10 +830,22 @@ class EquipamentosAjuste extends StatelessWidget {
                                       Material(
                                         color: Colors.transparent,
                                         child: InkWell(
-                                          onTap: () {
+                                          onTap: () async {
                                             if (setTempVaporDesat.value < 240) {
                                               setTempVaporDesat.value++;
                                             }
+                                            await mqttPublish(
+                                              topico:
+                                                  '${widget.serialNumber}/funcao/vapor_desativado',
+                                              mensagem:
+                                                  '${setTempVaporDesat.value}',
+                                              usuario: 'willianlunca',
+                                              senha: 'senha@9090',
+                                              onSucesso: () {},
+                                              onErro: (erro) {
+                                                print(erro);
+                                              },
+                                            );
                                             print('Aumentar Umidade');
                                           },
                                           borderRadius: BorderRadius.circular(
@@ -749,7 +905,257 @@ class EquipamentosAjuste extends StatelessWidget {
                     ),
                   ],
                 ),
+                Container(
+                  margin: EdgeInsets.only(top: 20),
+                  height: alturaTela * 1.26,
+                  width: largura * 0.9, // altura do card de ativar ou desavivar
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.grey.shade500, width: 1),
+                  ),
+                  child: Column(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(color: Colors.grey, width: 1),
+                          ),
+                        ),
+                        padding: const EdgeInsets.all(10),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.power_settings_new,
+                              size: 32,
+                              color: BillhardColors.verdePrincipal,
+                            ),
 
+                            const SizedBox(width: 10),
+
+                            const Text(
+                              'Equipamento',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                                color: BillhardColors.verdePrincipal,
+                              ),
+                            ),
+
+                            const Spacer(),
+
+                            CupertinoSwitch(
+                              value: status,
+                              activeTrackColor: BillhardColors.verdePrincipal,
+                              trackColor: Colors.grey.shade700,
+                              thumbColor: Colors.white,
+                              onChanged: (valor) async {
+                                await mqttPublish(
+                                  topico:
+                                      '${widget.serialNumber}/estado/equipamento',
+                                  mensagem: '${valor}',
+                                  usuario: 'willianlunca',
+                                  senha: 'senha@9090',
+                                  onSucesso: () {
+                                    print('Comando enviado com sucesso');
+                                  },
+                                  onErro: (erro) {
+                                    print(erro);
+                                  },
+                                );
+                                setState(() {
+                                  ventilacao = valor;
+                                });
+                              },
+                            ),
+
+                            const SizedBox(width: 12),
+
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 5,
+                              ),
+                              decoration: BoxDecoration(
+                                color: status
+                                    ? BillhardColors.verdePrincipal
+                                    : Colors.grey.shade700,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Text(
+                                status ? 'LIGADO' : 'DESLIGADO',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 11,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        /** Container para controle de Iluminaão */
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(color: Colors.grey, width: 1),
+                          ),
+                        ),
+                        padding: const EdgeInsets.all(10),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.lightbulb_outline,
+
+                              size: 32,
+                              color: BillhardColors.verdePrincipal,
+                            ),
+
+                            const SizedBox(width: 10),
+
+                            const Text(
+                              'Iluminação',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                                color: BillhardColors.verdePrincipal,
+                              ),
+                            ),
+
+                            const Spacer(),
+
+                            CupertinoSwitch(
+                              value: iluminacao,
+                              activeTrackColor: BillhardColors.verdePrincipal,
+                              trackColor: Colors.grey.shade700,
+                              thumbColor: Colors.white,
+                              onChanged: (valor) async {
+                                await mqttPublish(
+                                  topico:
+                                      '${widget.serialNumber}/estado/iluminacao',
+                                  mensagem: '${valor}',
+                                  usuario: 'willianlunca',
+                                  senha: 'senha@9090',
+                                  onSucesso: () {
+                                    print('Comando enviado com sucesso');
+                                  },
+                                  onErro: (erro) {
+                                    print(erro);
+                                  },
+                                );
+                                setState(() {
+                                  ventilacao = valor;
+                                });
+                              },
+                            ),
+
+                            const SizedBox(width: 12),
+
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 5,
+                              ),
+                              decoration: BoxDecoration(
+                                color: iluminacao
+                                    ? BillhardColors.verdePrincipal
+                                    : Colors.grey.shade700,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Text(
+                                iluminacao ? 'LIGADO' : 'DESLIGADO',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 11,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          //border: Border(
+                          //bottom: BorderSide(color: Colors.grey, width: 1),
+                          //),
+                        ),
+                        padding: const EdgeInsets.all(10),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.wind_power_outlined,
+                              size: 32,
+                              color: BillhardColors.verdePrincipal,
+                            ),
+
+                            const SizedBox(width: 10),
+
+                            const Text(
+                              'Ventilação ',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                                color: BillhardColors.verdePrincipal,
+                              ),
+                            ),
+
+                            const Spacer(),
+
+                            CupertinoSwitch(
+                              value: ventilacao,
+                              activeTrackColor: BillhardColors.verdePrincipal,
+                              trackColor: Colors.grey.shade700,
+                              thumbColor: Colors.white,
+                              onChanged: (valor) async {
+                                await mqttPublish(
+                                  topico:
+                                      '${widget.serialNumber}/estado/ventilacao',
+                                  mensagem: '${valor}',
+                                  usuario: 'willianlunca',
+                                  senha: 'senha@9090',
+                                  onSucesso: () {
+                                    print('Comando enviado com sucesso');
+                                  },
+                                  onErro: (erro) {
+                                    print(erro);
+                                  },
+                                );
+                                setState(() {
+                                  ventilacao = valor;
+                                });
+                              },
+                            ),
+
+                            const SizedBox(width: 12),
+
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 5,
+                              ),
+                              decoration: BoxDecoration(
+                                color: ventilacao
+                                    ? BillhardColors.verdePrincipal
+                                    : Colors.grey.shade700,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Text(
+                                ventilacao ? 'LIGADO' : 'DESLIGADO',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 11,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        /** Container para controle de Iluminaão */
+                      ),
+                    ],
+                  ),
+                ),
                 // quantos widgets quiser...
               ],
             ),

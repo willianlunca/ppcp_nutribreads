@@ -37,6 +37,7 @@ class _EquipamentosState extends State<Equipamentos> {
     double tamanhoTexto = larguraTela * 0.10;
 
     return Scaffold(
+      backgroundColor: BillhardColors.bege,
       body: Center(
         child: Column(
           children: [
