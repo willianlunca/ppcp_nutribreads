@@ -800,7 +800,7 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                               children: [
                                 Container(
                                   child: Icon(
-                                    Icons.water_drop_outlined,
+                                    Icons.timer_off_outlined,
                                     color: BillhardColors.verdePrincipal,
                                     size: tamanhoTexto * 2,
                                   ),
@@ -985,6 +985,101 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                       ),
                     ),
                   ],
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 20),
+                  height: alturaTela * 0.4,
+                  width: largura * 0.9,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          backgroundColor: BillhardColors.bege,
+                          title: const Text(
+                            'Salvar Configurações',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          content: const Text(
+                            'Deseja realmente salvar as configurações deste equipamento?',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: Text(
+                                'Cancelar',
+                                style: TextStyle(
+                                  color: BillhardColors.verdePrincipal,
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () async {
+                                final scaffoldMessenger = ScaffoldMessenger.of(
+                                  context,
+                                );
+
+                                Navigator.pop(context);
+
+                                await mqttPublish(
+                                  topico:
+                                      '${widget.serialNumber}/comando/estado/atualizacao',
+                                  mensagem: 'true',
+                                  usuario: 'willianlunca',
+                                  senha: 'senha@9090',
+                                  onSucesso: () {},
+                                  onErro: (erro) {
+                                    print(erro);
+                                  },
+                                );
+
+                                if (!mounted) return;
+
+                                scaffoldMessenger.showSnackBar(
+                                  SnackBar(
+                                    backgroundColor:
+                                        BillhardColors.verdePrincipal,
+                                    content: const Text(
+                                      'Configurações salvas com sucesso!',
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                'Salvar',
+                                style: TextStyle(
+                                  color: BillhardColors.terraCota,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: BillhardColors.terraCota,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 10,
+                      ),
+                    ),
+                    child: const Text(
+                      'Salvar Configurações',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ),
                 Container(
                   margin: EdgeInsets.only(top: 20),
