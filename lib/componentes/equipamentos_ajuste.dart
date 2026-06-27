@@ -14,9 +14,9 @@ class EquipamentosAjuste extends StatefulWidget {
 }
 
 class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
-  final ValueNotifier<int> setTemperatura = ValueNotifier<int>(25);
-  final ValueNotifier<int> setUmidade = ValueNotifier<int>(15);
-  final ValueNotifier<int> setTempVaporAtivo = ValueNotifier<int>(30);
+  final ValueNotifier<int> setTemperatura = ValueNotifier<int>(0);
+  final ValueNotifier<int> setUmidade = ValueNotifier<int>(12);
+  final ValueNotifier<int> setTempVaporAtivo = ValueNotifier<int>(10);
   final ValueNotifier<int> setTempVaporDesat = ValueNotifier<int>(40);
   bool status = false;
   bool iluminacao = false;
@@ -986,101 +986,7 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                     ),
                   ],
                 ),
-                Container(
-                  margin: const EdgeInsets.only(top: 20),
-                  height: alturaTela * 0.4,
-                  width: largura * 0.9,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          backgroundColor: BillhardColors.bege,
-                          title: const Text(
-                            'Salvar Configurações',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
-                          content: const Text(
-                            'Deseja realmente salvar as configurações deste equipamento?',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: Text(
-                                'Cancelar',
-                                style: TextStyle(
-                                  color: BillhardColors.verdePrincipal,
-                                ),
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () async {
-                                final scaffoldMessenger = ScaffoldMessenger.of(
-                                  context,
-                                );
 
-                                Navigator.pop(context);
-
-                                await mqttPublish(
-                                  topico:
-                                      '${widget.serialNumber}/comando/estado/atualizacao',
-                                  mensagem: 'true',
-                                  usuario: 'willianlunca',
-                                  senha: 'senha@9090',
-                                  onSucesso: () {},
-                                  onErro: (erro) {
-                                    print(erro);
-                                  },
-                                );
-
-                                if (!mounted) return;
-
-                                scaffoldMessenger.showSnackBar(
-                                  SnackBar(
-                                    backgroundColor:
-                                        BillhardColors.verdePrincipal,
-                                    content: const Text(
-                                      'Configurações salvas com sucesso!',
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                'Salvar',
-                                style: TextStyle(
-                                  color: BillhardColors.terraCota,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: BillhardColors.terraCota,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 24,
-                        vertical: 10,
-                      ),
-                    ),
-                    child: const Text(
-                      'Salvar Configurações',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
                 Container(
                   margin: EdgeInsets.only(top: 20),
                   height: alturaTela * 1.26,
@@ -1330,6 +1236,101 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                         /** Container para controle de Iluminaão */
                       ),
                     ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 20),
+                  height: alturaTela * 0.4,
+                  width: largura * 0.9,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          backgroundColor: BillhardColors.bege,
+                          title: const Text(
+                            'Salvar Configurações',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          content: const Text(
+                            'Deseja realmente salvar as configurações deste equipamento?',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: Text(
+                                'Cancelar',
+                                style: TextStyle(
+                                  color: BillhardColors.verdePrincipal,
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () async {
+                                final scaffoldMessenger = ScaffoldMessenger.of(
+                                  context,
+                                );
+
+                                Navigator.pop(context);
+
+                                await mqttPublish(
+                                  topico:
+                                      '${widget.serialNumber}/comando/estado/atualizacao',
+                                  mensagem: 'true',
+                                  usuario: 'willianlunca',
+                                  senha: 'senha@9090',
+                                  onSucesso: () {},
+                                  onErro: (erro) {
+                                    print(erro);
+                                  },
+                                );
+
+                                if (!mounted) return;
+
+                                scaffoldMessenger.showSnackBar(
+                                  SnackBar(
+                                    backgroundColor:
+                                        BillhardColors.verdePrincipal,
+                                    content: const Text(
+                                      'Configurações salvas com sucesso!',
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                'Salvar',
+                                style: TextStyle(
+                                  color: BillhardColors.terraCota,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: BillhardColors.terraCota,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 10,
+                      ),
+                    ),
+                    child: const Text(
+                      'Salvar Configurações',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
                 // quantos widgets quiser...

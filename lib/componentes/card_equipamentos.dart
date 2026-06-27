@@ -136,6 +136,59 @@ class CardEquipamentosState extends State<CardEquipamentos> {
             child: InkWell(
               borderRadius: BorderRadius.circular(10),
               onTap: () {
+                // Se estiver offline (cinza ou vermelho)
+                if (corStatus == Colors.red || corStatus == Colors.grey) {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      backgroundColor: BillhardColors.bege,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      title: Row(
+                        children: [
+                          Icon(
+                            Icons.cloud_off,
+                            color: Colors.red.shade700,
+                            size: 28,
+                          ),
+                          const SizedBox(width: 10),
+                          const Expanded(
+                            child: Text(
+                              'Equipamento Offline',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      content: const Text(
+                        'Arraste o card para baixo para atualizar.\n\n'
+                        'As configurações só estarão disponíveis quando o equipamento estiver online.',
+                        style: TextStyle(color: Colors.black87, fontSize: 14),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text(
+                            'Entendi',
+                            style: TextStyle(
+                              color: BillhardColors.verdePrincipal,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+
+                  return; // Não abre o modal
+                }
+
+                // Equipamento online -> abre normalmente
                 showModalBottomSheet(
                   context: context,
                   isScrollControlled: true,
