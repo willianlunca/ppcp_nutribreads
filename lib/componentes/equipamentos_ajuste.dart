@@ -419,7 +419,208 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      'Faixa recomendada: 20°C s 40°C',
+                                      'Faixa recomendada: 20°C a 40°C',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey.shade800,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(top: 20),
+                                child: Icon(
+                                  Icons.trending_down,
+                                  color: BillhardColors.verdePrincipal,
+                                  size: tamanhoTexto * 2,
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 15),
+                                child: Text(
+                                  'Range Temperatura',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Container(width: tamanhoTexto * 2),
+                              Container(
+                                margin: EdgeInsets.only(left: 15),
+                                child: Text(
+                                  'Defina o range de queda de temperatura',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey.shade800,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              Container(
+                                height: alturaTela / 2,
+                                width: largura * 0.9,
+                                margin: EdgeInsets.only(top: 10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    color: Colors.grey.shade500,
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Container(
+                                  padding: EdgeInsets.all(10),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Material(
+                                        color: Colors.transparent,
+                                        child: InkWell(
+                                          onTap: () async {
+                                            if (setTemperatura.value > 0) {
+                                              setTemperatura.value--;
+                                            }
+                                            await mqttPublish(
+                                              topico:
+                                                  '${widget.serialNumber}/comando/temperatura',
+                                              mensagem:
+                                                  '${setTemperatura.value}',
+                                              usuario: 'willianlunca',
+                                              senha: 'senha@9090',
+                                              onSucesso: () {},
+                                              onErro: (erro) {
+                                                print(erro);
+                                              },
+                                            );
+                                            print('Diminuir temperatura');
+                                          },
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
+                                          child: Container(
+                                            width: larguraTela / 3,
+                                            height: alturaTela / 3,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              color: BillhardColors.terraCota,
+                                            ),
+                                            child: const Center(
+                                              child: Icon(
+                                                Icons.remove,
+                                                color: Colors.white,
+                                                size: 40,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        width: larguraTela / 1.5,
+                                        height: alturaTela / 3,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: ValueListenableBuilder<int>(
+                                            valueListenable: setTemperatura,
+                                            builder:
+                                                (
+                                                  context,
+                                                  valorTemperatura,
+                                                  child,
+                                                ) {
+                                                  return Text(
+                                                    '${valorTemperatura}°C',
+                                                    style: TextStyle(
+                                                      fontSize: 25,
+                                                      fontWeight:
+                                                          FontWeight.w800,
+                                                    ),
+                                                  );
+                                                },
+                                          ),
+                                        ),
+                                      ),
+                                      Material(
+                                        color: Colors.transparent,
+                                        child: InkWell(
+                                          onTap: () async {
+                                            if (setTemperatura.value < 60) {
+                                              setTemperatura.value++;
+                                            }
+                                            await mqttPublish(
+                                              topico:
+                                                  '${widget.serialNumber}/comando/temperatura',
+                                              mensagem:
+                                                  '${setTemperatura.value}',
+                                              usuario: 'willianlunca',
+                                              senha: 'senha@9090',
+                                              onSucesso: () {},
+                                              onErro: (erro) {
+                                                print(erro);
+                                              },
+                                            );
+                                            print('Aumentar temperatura');
+                                          },
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
+                                          child: Container(
+                                            width: larguraTela / 3,
+                                            height: alturaTela / 3,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              color: BillhardColors.terraCota,
+                                            ),
+                                            child: const Center(
+                                              child: Icon(
+                                                Icons.add,
+                                                color: Colors.white,
+                                                size: 40,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                height: alturaTela / 3,
+                                width: largura * 0.9,
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: Colors.grey,
+                                      width: 1,
+                                    ),
+                                  ),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Faixa recomendada: 2°C a 5°C',
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: Colors.grey.shade800,
@@ -601,6 +802,207 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                                   children: [
                                     Text(
                                       'Faixa recomendada: 20% s 90%',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey.shade800,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(top: 20),
+                                child: Icon(
+                                  Icons.trending_down,
+                                  color: BillhardColors.verdePrincipal,
+                                  size: tamanhoTexto * 2,
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 15),
+                                child: Text(
+                                  'Range Temperatura',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Container(width: tamanhoTexto * 2),
+                              Container(
+                                margin: EdgeInsets.only(left: 15),
+                                child: Text(
+                                  'Defina o range de queda de temperatura',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey.shade800,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              Container(
+                                height: alturaTela / 2,
+                                width: largura * 0.9,
+                                margin: EdgeInsets.only(top: 10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    color: Colors.grey.shade500,
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Container(
+                                  padding: EdgeInsets.all(10),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Material(
+                                        color: Colors.transparent,
+                                        child: InkWell(
+                                          onTap: () async {
+                                            if (setTemperatura.value > 0) {
+                                              setTemperatura.value--;
+                                            }
+                                            await mqttPublish(
+                                              topico:
+                                                  '${widget.serialNumber}/comando/temperatura',
+                                              mensagem:
+                                                  '${setTemperatura.value}',
+                                              usuario: 'willianlunca',
+                                              senha: 'senha@9090',
+                                              onSucesso: () {},
+                                              onErro: (erro) {
+                                                print(erro);
+                                              },
+                                            );
+                                            print('Diminuir temperatura');
+                                          },
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
+                                          child: Container(
+                                            width: larguraTela / 3,
+                                            height: alturaTela / 3,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              color: BillhardColors.terraCota,
+                                            ),
+                                            child: const Center(
+                                              child: Icon(
+                                                Icons.remove,
+                                                color: Colors.white,
+                                                size: 40,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        width: larguraTela / 1.5,
+                                        height: alturaTela / 3,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: ValueListenableBuilder<int>(
+                                            valueListenable: setTemperatura,
+                                            builder:
+                                                (
+                                                  context,
+                                                  valorTemperatura,
+                                                  child,
+                                                ) {
+                                                  return Text(
+                                                    '${valorTemperatura}°C',
+                                                    style: TextStyle(
+                                                      fontSize: 25,
+                                                      fontWeight:
+                                                          FontWeight.w800,
+                                                    ),
+                                                  );
+                                                },
+                                          ),
+                                        ),
+                                      ),
+                                      Material(
+                                        color: Colors.transparent,
+                                        child: InkWell(
+                                          onTap: () async {
+                                            if (setTemperatura.value < 60) {
+                                              setTemperatura.value++;
+                                            }
+                                            await mqttPublish(
+                                              topico:
+                                                  '${widget.serialNumber}/comando/temperatura',
+                                              mensagem:
+                                                  '${setTemperatura.value}',
+                                              usuario: 'willianlunca',
+                                              senha: 'senha@9090',
+                                              onSucesso: () {},
+                                              onErro: (erro) {
+                                                print(erro);
+                                              },
+                                            );
+                                            print('Aumentar temperatura');
+                                          },
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
+                                          child: Container(
+                                            width: larguraTela / 3,
+                                            height: alturaTela / 3,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              color: BillhardColors.terraCota,
+                                            ),
+                                            child: const Center(
+                                              child: Icon(
+                                                Icons.add,
+                                                color: Colors.white,
+                                                size: 40,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                height: alturaTela / 3,
+                                width: largura * 0.9,
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: Colors.grey,
+                                      width: 1,
+                                    ),
+                                  ),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Faixa recomendada: 5% a 8% UR',
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: Colors.grey.shade800,
