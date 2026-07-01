@@ -13,9 +13,46 @@ class Equipamentos extends StatefulWidget {
   State<Equipamentos> createState() => _EquipamentosState();
 }
 
-class _EquipamentosState extends State<Equipamentos> {
+class _EquipamentosState extends State<Equipamentos>
+    with WidgetsBindingObserver {
   final GlobalKey<CardEquipamentosState> cardKey =
       GlobalKey<CardEquipamentosState>();
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  bool atualizando = false;
+
+  Future<void> atualizarCard() async {
+    if (atualizando) return;
+
+    atualizando = true;
+
+    try {
+      await cardKey.currentState?.iniciarMqtt();
+    } finally {
+      atualizando = false;
+    }
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      Future.delayed(const Duration(milliseconds: 500), () {
+        if (!mounted) return;
+        atualizarCard();
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

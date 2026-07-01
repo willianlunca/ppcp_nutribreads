@@ -15,7 +15,9 @@ class EquipamentosAjuste extends StatefulWidget {
 
 class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
   final ValueNotifier<int> setTemperatura = ValueNotifier<int>(0);
+  final ValueNotifier<int> setRangeTemperatura = ValueNotifier<int>(0);
   final ValueNotifier<int> setUmidade = ValueNotifier<int>(12);
+  final ValueNotifier<int> setRangeUmidade = ValueNotifier<int>(0);
   final ValueNotifier<int> setTempVaporAtivo = ValueNotifier<int>(10);
   final ValueNotifier<int> setTempVaporDesat = ValueNotifier<int>(40);
   bool status = false;
@@ -93,6 +95,26 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
       },
     );
     await mqttSubscribe(
+      topico: '${widget.serialNumber}/resposta/set/range_temperatura',
+      usuario: 'willianlunca',
+      senha: 'senha@9090',
+      onMensagem: (retorno) {
+        if (!mounted) return;
+
+        final int? valor = int.tryParse(retorno.toString());
+
+        if (valor != null) {
+          setState(() {
+            setRangeTemperatura.value = valor;
+          });
+
+          print('Range Temperatura recebida: ${setRangeTemperatura.value}');
+        } else {
+          print('Erro ao converter range temperatura: $retorno');
+        }
+      },
+    );
+    await mqttSubscribe(
       topico: '${widget.serialNumber}/resposta/set/umidade',
       usuario: 'willianlunca',
       senha: 'senha@9090',
@@ -109,6 +131,26 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
           print('Umidade recebida: ${setUmidade.value}');
         } else {
           print('Erro ao converter Umidade: $retorno');
+        }
+      },
+    );
+    await mqttSubscribe(
+      topico: '${widget.serialNumber}/resposta/set/range_umidade',
+      usuario: 'willianlunca',
+      senha: 'senha@9090',
+      onMensagem: (retorno) {
+        if (!mounted) return;
+
+        final int? valor = int.tryParse(retorno.toString());
+
+        if (valor != null) {
+          setState(() {
+            setRangeUmidade.value = valor;
+          });
+
+          print('Range Umidade recebida: ${setUmidade.value}');
+        } else {
+          print('Erro ao converter Range Umidade: $retorno');
         }
       },
     );
@@ -492,14 +534,14 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                                         color: Colors.transparent,
                                         child: InkWell(
                                           onTap: () async {
-                                            if (setTemperatura.value > 0) {
-                                              setTemperatura.value--;
+                                            if (setRangeTemperatura.value > 0) {
+                                              setRangeTemperatura.value--;
                                             }
                                             await mqttPublish(
                                               topico:
-                                                  '${widget.serialNumber}/comando/temperatura',
+                                                  '${widget.serialNumber}/comando/range_temperatura',
                                               mensagem:
-                                                  '${setTemperatura.value}',
+                                                  '${setRangeTemperatura.value}',
                                               usuario: 'willianlunca',
                                               senha: 'senha@9090',
                                               onSucesso: () {},
@@ -507,7 +549,9 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                                                 print(erro);
                                               },
                                             );
-                                            print('Diminuir temperatura');
+                                            print(
+                                              'Diminuir Range de temperatura',
+                                            );
                                           },
                                           borderRadius: BorderRadius.circular(
                                             8,
@@ -540,7 +584,8 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                                         ),
                                         child: Center(
                                           child: ValueListenableBuilder<int>(
-                                            valueListenable: setTemperatura,
+                                            valueListenable:
+                                                setRangeTemperatura,
                                             builder:
                                                 (
                                                   context,
@@ -563,14 +608,15 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                                         color: Colors.transparent,
                                         child: InkWell(
                                           onTap: () async {
-                                            if (setTemperatura.value < 60) {
-                                              setTemperatura.value++;
+                                            if (setRangeTemperatura.value <
+                                                10) {
+                                              setRangeTemperatura.value++;
                                             }
                                             await mqttPublish(
                                               topico:
-                                                  '${widget.serialNumber}/comando/temperatura',
+                                                  '${widget.serialNumber}/comando/range_temperatura',
                                               mensagem:
-                                                  '${setTemperatura.value}',
+                                                  '${setRangeTemperatura.value}',
                                               usuario: 'willianlunca',
                                               senha: 'senha@9090',
                                               onSucesso: () {},
@@ -826,7 +872,7 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                               Container(
                                 margin: EdgeInsets.only(left: 15),
                                 child: Text(
-                                  'Range Temperatura',
+                                  'Range Umidade',
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w700,
@@ -874,14 +920,14 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                                         color: Colors.transparent,
                                         child: InkWell(
                                           onTap: () async {
-                                            if (setTemperatura.value > 0) {
-                                              setTemperatura.value--;
+                                            if (setRangeUmidade.value > 0) {
+                                              setRangeUmidade.value--;
                                             }
                                             await mqttPublish(
                                               topico:
-                                                  '${widget.serialNumber}/comando/temperatura',
+                                                  '${widget.serialNumber}/comando/range_umidade',
                                               mensagem:
-                                                  '${setTemperatura.value}',
+                                                  '${setRangeUmidade.value}',
                                               usuario: 'willianlunca',
                                               senha: 'senha@9090',
                                               onSucesso: () {},
@@ -889,7 +935,7 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                                                 print(erro);
                                               },
                                             );
-                                            print('Diminuir temperatura');
+                                            print('Diminuir Range de Umidade');
                                           },
                                           borderRadius: BorderRadius.circular(
                                             8,
@@ -922,15 +968,11 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                                         ),
                                         child: Center(
                                           child: ValueListenableBuilder<int>(
-                                            valueListenable: setTemperatura,
+                                            valueListenable: setRangeUmidade,
                                             builder:
-                                                (
-                                                  context,
-                                                  valorTemperatura,
-                                                  child,
-                                                ) {
+                                                (context, valorUmidade, child) {
                                                   return Text(
-                                                    '${valorTemperatura}°C',
+                                                    '$valorUmidade%',
                                                     style: TextStyle(
                                                       fontSize: 25,
                                                       fontWeight:
@@ -945,14 +987,14 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                                         color: Colors.transparent,
                                         child: InkWell(
                                           onTap: () async {
-                                            if (setTemperatura.value < 60) {
-                                              setTemperatura.value++;
+                                            if (setRangeUmidade.value < 10) {
+                                              setRangeUmidade.value++;
                                             }
                                             await mqttPublish(
                                               topico:
-                                                  '${widget.serialNumber}/comando/temperatura',
+                                                  '${widget.serialNumber}/comando/range_umidade',
                                               mensagem:
-                                                  '${setTemperatura.value}',
+                                                  '${setRangeUmidade.value}',
                                               usuario: 'willianlunca',
                                               senha: 'senha@9090',
                                               onSucesso: () {},
@@ -960,7 +1002,7 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                                                 print(erro);
                                               },
                                             );
-                                            print('Aumentar temperatura');
+                                            print('Aumentar Range de Umidade');
                                           },
                                           borderRadius: BorderRadius.circular(
                                             8,
@@ -1678,8 +1720,6 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                                   context,
                                 );
 
-                                Navigator.pop(context);
-
                                 await mqttPublish(
                                   topico:
                                       '${widget.serialNumber}/comando/estado/atualizacao',
@@ -1694,14 +1734,25 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
 
                                 if (!mounted) return;
 
-                                scaffoldMessenger.showSnackBar(
-                                  SnackBar(
-                                    backgroundColor:
-                                        BillhardColors.verdePrincipal,
-                                    content: const Text(
-                                      'Configurações salvas com sucesso!',
-                                    ),
-                                  ),
+                                // Fecha o AlertDialog
+                                Navigator.pop(context);
+
+                                // Fecha o BottomSheet
+                                Navigator.pop(context);
+
+                                Future.delayed(
+                                  const Duration(milliseconds: 300),
+                                  () {
+                                    scaffoldMessenger.showSnackBar(
+                                      SnackBar(
+                                        backgroundColor:
+                                            BillhardColors.verdePrincipal,
+                                        content: const Text(
+                                          'Configurações salvas com sucesso!',
+                                        ),
+                                      ),
+                                    );
+                                  },
                                 );
                               },
                               child: Text(
