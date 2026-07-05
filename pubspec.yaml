@@ -29,6 +29,7 @@ dependencies:
   pull_to_refresh: ^2.0.0
   mqtt_client: ^10.5.1
   device_info_plus: 12.2.0
+  flutter_carplay: ^1.6.3
   
 
 dev_dependencies:

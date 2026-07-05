@@ -12,6 +12,7 @@ import 'package:ppcp_nutribreads/screens/logist_canhoto.dart';
 import 'package:ppcp_nutribreads/screens/login.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_carplay/flutter_carplay.dart';
 
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -64,6 +65,76 @@ class _AuthCheckState extends State<AuthCheck> {
 
     return destino!;
   }
+}
+
+void iniciarCarPlayBillHard() {
+  FlutterCarplay.addListenerOnConnectionChange((status) {
+    debugPrint('CarPlay conectado/status: $status');
+  });
+
+  FlutterCarplay.setRootTemplate(
+    rootTemplate: CPListTemplate(
+      title: 'BillHard',
+      systemIcon: 'house.fill',
+      sections: [
+        CPListSection(
+          header: 'Portões',
+          items: [
+            CPListItem(
+              text: 'Abrir portão principal',
+              detailText: 'Entrada da empresa',
+              onPress: (complete, self) async {
+                debugPrint('CarPlay: abrir portão principal');
+
+                // Aqui depois você chama sua API BillHard.
+                // Exemplo futuro:
+                // await abrirPortaoApi('portao_principal');
+
+                self.setDetailText('Comando enviado');
+                complete();
+              },
+            ),
+            CPListItem(
+              text: 'Abrir garagem',
+              detailText: 'Garagem BillHard',
+              onPress: (complete, self) async {
+                debugPrint('CarPlay: abrir garagem');
+
+                self.setDetailText('Comando enviado');
+                complete();
+              },
+            ),
+            CPListItem(
+              text: 'Fechar portão',
+              detailText: 'Fechar entrada principal',
+              onPress: (complete, self) async {
+                debugPrint('CarPlay: fechar portão');
+
+                self.setDetailText('Comando enviado');
+                complete();
+              },
+            ),
+          ],
+        ),
+        CPListSection(
+          header: 'Status',
+          items: [
+            CPListItem(
+              text: 'Verificar conexão',
+              detailText: 'API BillHard',
+              onPress: (complete, self) async {
+                debugPrint('CarPlay: verificar conexão');
+
+                self.setDetailText('Online');
+                complete();
+              },
+            ),
+          ],
+        ),
+      ],
+    ),
+    animated: true,
+  );
 }
 
 void main() async {
