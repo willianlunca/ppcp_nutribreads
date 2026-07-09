@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ppcp_nutribreads/colors/colors.dart';
+import 'package:billhard_app/colors/colors.dart';
 
 class CardListaColaboradores extends StatefulWidget {
   final String iniciaisNome;

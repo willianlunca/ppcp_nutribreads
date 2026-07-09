@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ppcp_nutribreads/componentes/load.dart';
+import 'package:billhard_app/componentes/load.dart';
 
 class LoadWidget extends StatelessWidget {
   const LoadWidget({super.key});

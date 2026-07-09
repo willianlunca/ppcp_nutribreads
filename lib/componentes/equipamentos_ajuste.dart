@@ -1,8 +1,9 @@
+import 'package:billhard_app/componentes/equipamentos_falha.dart';
 import 'package:flutter/material.dart';
-import 'package:ppcp_nutribreads/colors/colors.dart';
+import 'package:billhard_app/colors/colors.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:ppcp_nutribreads/functions/mqtt_publish.dart';
-import 'package:ppcp_nutribreads/functions/mqtt_subscribe.dart';
+import 'package:billhard_app/functions/mqtt_publish.dart';
+import 'package:billhard_app/functions/mqtt_subscribe.dart';
 
 class EquipamentosAjuste extends StatefulWidget {
   final String serialNumber;
@@ -220,7 +221,7 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
         color: BillhardColors.bege,
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      height: MediaQuery.of(context).size.height * 0.85,
+      height: MediaQuery.of(context).size.height * 0.90,
       child: Column(
         children: [
           const SizedBox(height: 12),
@@ -1433,7 +1434,7 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
 
                 Container(
                   margin: EdgeInsets.only(top: 20),
-                  height: alturaTela * 1.26,
+                  height: alturaTela * 1.15,
                   width: largura * 0.9, // altura do card de ativar ou desavivar
                   decoration: BoxDecoration(
                     color: Colors.transparent,
@@ -1786,15 +1787,121 @@ class _EquipamentosAjusteState extends State<EquipamentosAjuste> {
                     ),
                   ),
                 ),
+                Container(
+                  margin: const EdgeInsets.only(top: 20),
+                  width: largura * 0.9,
+                  height: alturaTela / 2,
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () {
+                        print('Abrir logs do equipamento');
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.white,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(25),
+                            ),
+                          ),
+                          builder: (_) => EquipamentosFalha(
+                            serialNumber: widget.serialNumber,
+                          ),
+                        );
+
+                        // Exemplo:
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (_) => TelaLogs(
+                        //       serialNumber: widget.serialNumber,
+                        //     ),
+                        //   ),
+                        // );
+                      },
+                      borderRadius: BorderRadius.circular(8),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: Colors.grey.shade500,
+                            width: 1,
+                          ),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Icon(
+                                    Icons.article_outlined,
+                                    size: 32,
+                                    color: BillhardColors.verdePrincipal,
+                                  ),
+
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          'Acessar Logs do Equipamento',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+
+                                        const SizedBox(height: 4),
+
+                                        Text(
+                                          'Visualizar logs de atividade do equipamento',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 9,
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.grey.shade700,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+
+                                  Icon(
+                                    Icons.login,
+                                    size: 32,
+                                    color: BillhardColors.verdePrincipal,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: double.infinity,
+                  height: alturaTela / 2,
+                  decoration: BoxDecoration(color: Colors.transparent),
+                ),
                 // quantos widgets quiser...
               ],
             ),
           ),
-          Container(
+          /*Container(
             width: double.infinity,
             height: alturaTela / 2,
             decoration: BoxDecoration(color: Colors.transparent),
-          ),
+          ),*/
         ],
       ),
     );

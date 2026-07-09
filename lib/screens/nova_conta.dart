@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ppcp_nutribreads/colors/colors.dart';
-import 'package:ppcp_nutribreads/screens/login.dart';
+import 'package:billhard_app/colors/colors.dart';
+import 'package:billhard_app/screens/login.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:lottie/lottie.dart';
 

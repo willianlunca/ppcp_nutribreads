@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:ppcp_nutribreads/colors/colors.dart';
-import 'package:ppcp_nutribreads/componentes/ppcp_cabecalho_colaboradores.dart';
-import 'package:ppcp_nutribreads/componentes/ppcp_card_lista_colaboradores.dart';
-import 'package:ppcp_nutribreads/services/api.dart';
+import 'package:billhard_app/colors/colors.dart';
+import 'package:billhard_app/componentes/ppcp_cabecalho_colaboradores.dart';
+import 'package:billhard_app/componentes/ppcp_card_lista_colaboradores.dart';
+import 'package:billhard_app/services/api.dart';
 import 'dart:convert';
 
-import 'package:ppcp_nutribreads/services/functions.dart';
+import 'package:billhard_app/services/functions.dart';
 
 class Colaboradores extends StatefulWidget {
   const Colaboradores({super.key});

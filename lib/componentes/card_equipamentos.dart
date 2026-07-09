@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:ppcp_nutribreads/colors/colors.dart';
-import 'package:ppcp_nutribreads/componentes/equipamentos_ajuste.dart';
-import 'package:ppcp_nutribreads/functions/mqtt_subscribe.dart';
+import 'package:billhard_app/colors/colors.dart';
+import 'package:billhard_app/componentes/equipamentos_ajuste.dart';
+import 'package:billhard_app/functions/mqtt_subscribe.dart';
 import 'dart:async';
+
+import 'package:billhard_app/services/notificacao_service.dart';
 
 class CardEquipamentos extends StatefulWidget {
   final bool status;
@@ -73,6 +75,17 @@ class CardEquipamentosState extends State<CardEquipamentos> {
         setState(() {
           umidadeRecebida = retorno.toString();
         });
+      },
+    );
+    await mqttSubscribe(
+      topico: '${widget.serialNumber}/notificacao',
+      usuario: 'willianlunca',
+      senha: 'senha@9090',
+      onMensagem: (retorno) async {
+        await NotificacaoService.mostrar(
+          titulo: 'Nova notificação',
+          mensagem: retorno.toString(),
+        );
       },
     );
 

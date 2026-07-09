@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:ppcp_nutribreads/componentes/ppcp_card_produto.dart';
-import 'package:ppcp_nutribreads/componentes/ppcp_cabecalho_list_prod.dart';
-import 'package:ppcp_nutribreads/screens/ppcp_exec_producao.dart';
-import 'package:ppcp_nutribreads/screens/ppcp_lista_ordens.dart';
+import 'package:billhard_app/componentes/ppcp_card_produto.dart';
+import 'package:billhard_app/componentes/ppcp_cabecalho_list_prod.dart';
+import 'package:billhard_app/screens/ppcp_exec_producao.dart';
+import 'package:billhard_app/screens/ppcp_lista_ordens.dart';
 
 class ListaPoroducao extends StatelessWidget {
   const ListaPoroducao({super.key});

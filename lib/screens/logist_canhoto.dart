@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:ppcp_nutribreads/functions/permissoes.dart';
+import 'package:billhard_app/functions/permissoes.dart';
 
 class LogistCanhoto extends StatefulWidget {
   const LogistCanhoto({super.key});

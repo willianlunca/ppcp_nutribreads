@@ -1,4 +1,4 @@
-name: ppcp_nutribreads
+name: billhard_app
 description: "A new Flutter project."
 publish_to: 'none'
 
@@ -30,6 +30,12 @@ dependencies:
   mqtt_client: ^10.5.1
   device_info_plus: 12.2.0
   flutter_carplay: ^1.6.3
+  flutter_local_notifications: ^17.2.4
+  flutter_background_service: ^5.0.10
+  flutter_background_service_android: ^6.2.7
+  permission_handler: ^11.3.1
+  push: ^3.3.3
+
   
 
 dev_dependencies:

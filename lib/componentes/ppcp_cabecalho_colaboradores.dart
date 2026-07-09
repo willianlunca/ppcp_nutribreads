@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ppcp_nutribreads/colors/colors.dart';
-import 'package:ppcp_nutribreads/screens/login.dart';
-import 'package:ppcp_nutribreads/services/auth.dart';
+import 'package:billhard_app/colors/colors.dart';
+import 'package:billhard_app/screens/login.dart';
+import 'package:billhard_app/services/auth.dart';
 
 class CabecalhoColaboradores extends StatelessWidget {
   final String buttonSuperior;

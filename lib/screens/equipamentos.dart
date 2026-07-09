@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:ppcp_nutribreads/colors/colors.dart';
-import 'package:ppcp_nutribreads/componentes/card_equipamentos.dart';
-import 'package:ppcp_nutribreads/screens/modulos.dart';
+import 'package:billhard_app/colors/colors.dart';
+import 'package:billhard_app/componentes/card_equipamentos.dart';
+import 'package:billhard_app/screens/modulos.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
-import 'package:ppcp_nutribreads/functions/mqtt_subscribe.dart';
+import 'package:billhard_app/functions/mqtt_subscribe.dart';
 
 class Equipamentos extends StatefulWidget {
   const Equipamentos({super.key});
